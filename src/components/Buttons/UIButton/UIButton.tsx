@@ -6,7 +6,7 @@ import cn from "classnames";
 import { Icon } from "@/components";
 
 import { UIButtonProps } from "./UIButton.type";
-import "./UIbutton.scss";
+import "./UIButton.scss";
 
 const UIbutton: FC<UIButtonProps> = ({
   isLoading = false,
