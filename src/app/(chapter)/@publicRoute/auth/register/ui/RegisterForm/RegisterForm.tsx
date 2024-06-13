@@ -37,11 +37,10 @@ const RegisterForm: FC = () => {
 
   const handleEmail = async (email: string) => {
     const res = await emailCreate(email);
-    console.log("🚀 ~ handleEmail ~ res:", res);
+    console.log("🚀 ~ handleEmail ~ res:", res.data);
 
     if ("errorMessage" in res) {
       const [errorMessage, serviceMessage] = res.errorMessage.split("; ");
-      console.log("🚀 ~ handleEmail ~ errorMessage:", errorMessage);
 
       if (typeof serviceMessage === "string") {
         setError("root.serverError", {
@@ -49,15 +48,21 @@ const RegisterForm: FC = () => {
           type: "custom",
         });
 
-        // if (serviceMessage.endsWith("unconfirmed"))
-        //   return setTimeout(() => setShowOtp(true), 2000);
+        if (serviceMessage.endsWith("unconfirmed"))
+          return setTimeout(() => setShowOtp(true), 2000);
 
-        // if (serviceMessage.endsWith("confirmed"))
-        //   return setTimeout(() => push(LinksEnum.ACCOUNT_CREATION), 2000);
+        if (serviceMessage.endsWith("confirmed"))
+          return setTimeout(
+            () => push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId),
+            2000
+          );
 
-        // if (serviceMessage.endsWith("completed"))
-        //   return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
-        return;
+        if (
+          serviceMessage.endsWith("completed") ||
+          serviceMessage.endsWith("restoring") ||
+          serviceMessage.endsWith("deleted")
+        )
+          return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
       }
 
       return setError("root.serverError", {
