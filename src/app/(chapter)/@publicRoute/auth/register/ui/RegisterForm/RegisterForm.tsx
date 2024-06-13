@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { TextField, UIButton } from "@/components";
+import { emailCreate } from "@/lib";
 // import { LinksEnum } from "@/types";
 // import { getDataFromLS, setDataToLS } from "@/utils";
 
@@ -34,7 +35,8 @@ const RegisterForm: FC = () => {
 
   const handleEmail = async (email: string) => {
     try {
-      console.log("🚀 ~ handleEmail ~ email:", email);
+      const res = await emailCreate(email);
+      console.log("🚀 ~ handleEmail ~ res:", res);
       setShowOtp(true);
     } catch (error) {
       console.log("🚀 ~ handleEmail ~ error:", error);

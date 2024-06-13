@@ -1,4 +1,4 @@
-import { getSession } from "@/lib";
+import { getSession } from "@/lib/actions/session";
 import { ReactNode } from "react";
 
 export default async function ChapterLayout({
