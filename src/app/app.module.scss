@@ -5,11 +5,11 @@
     @apply w-full text-center px-2-md md:px-3-md pb-2-xs pt-[220px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-no-repeat  bg-top  bg-[length:375px_250px] md:bg-[length:768px_462px] md:pt-[420px] laptop:bg-[length:974px_650px] laptop:pt-[580px];
 
     &.not-found {
-      @apply bg-[url('/svg/404.webp')];
+      @apply bg-[url('/webp/404.webp')];
     }
 
     &.error {
-      @apply bg-[url('/svg/error.webp')];
+      @apply bg-[url('/webp/error.webp')];
     }
   }
 
