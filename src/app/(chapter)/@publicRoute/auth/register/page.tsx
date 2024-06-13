@@ -1,6 +1,10 @@
 import React from "react";
-import { AuthLink, BlockAuth, Delimiter, GoogleAuth } from "../ui";
+
 import { LinksEnum } from "@/types";
+
+import { AuthLink, BlockAuth, Delimiter, GoogleAuth } from "../ui";
+
+import { RegisterForm } from "./ui";
 
 function RegisterPage() {
   return (
@@ -10,6 +14,7 @@ function RegisterPage() {
       typePageText="Create new account"
     >
       <div className="max-w-[327px] w-full mx-auto">
+        <RegisterForm />
         <Delimiter />
         <GoogleAuth />
         <AuthLink

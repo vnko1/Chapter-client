@@ -13,6 +13,7 @@ const WelcomePageImage: FC = () => {
           alt="chapter-girl"
           width={990}
           height={1086}
+          priority
         />
       </div>
     </div>

@@ -9,3 +9,6 @@
     @apply min-h-[42px] md:min-h-[44px] laptop:min-h-[50px];
   }
 }
+.message {
+  @apply mt-[5px] mb-[15px] text-grey-1000 text-xxs;
+}

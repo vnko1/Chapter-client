@@ -1,56 +1,65 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { TextField, UIButton } from "@/components";
-import { LinksEnum } from "@/types";
-import { getDataFromLS, setDataToLS } from "@/utils";
+// import { LinksEnum } from "@/types";
+// import { getDataFromLS, setDataToLS } from "@/utils";
 
 import { FormValues, validationSchema } from "./validationSchema";
-
 import styles from "./RegisterForm.module.scss";
 
 const initialValues: FormValues = {
   email: "",
   otp: "",
 };
+
 const RegisterForm: FC = () => {
-  const methods = useForm();
-  const {} = methods;
-  const [step, setStep] = useState(1);
+  const [showOtp, setShowOtp] = useState(false);
+
+  const validationType = showOtp ? "otp" : "email";
+
+  const methods = useForm<FormValues>({
+    values: initialValues,
+    resolver: zodResolver(validationSchema(validationType)),
+  });
+  const { formState, handleSubmit } = methods;
+  const { isDirty, isValid, isSubmitting } = formState;
   const { replace } = useRouter();
-  const isNextStep = step > 1;
-  const validationType = step > 1 ? "otp" : "email";
 
   const handleEmail = async (email: string) => {};
 
-  const handleOtp = async (hash: string) => {};
+  const handleOtp = async (otp: string) => {};
 
-  const onHandleSubmit = async () => {};
+  const onHandleSubmit: SubmitHandler<FormValues> = async (formValues) => {
+    console.log("🚀 ~ formValues:", formValues);
+  };
 
   return (
     <FormProvider {...methods}>
-      <form className={styles["form"]}>
+      <form className={styles["form"]} onSubmit={handleSubmit(onHandleSubmit)}>
         <TextField
           id="email"
           name="email"
-          value={values.email}
           label="Your email"
-          classNames={isNextStep ? styles["form__input"] : ""}
-          disabled={isNextStep}
+          classNames={showOtp ? styles["form__input"] : ""}
+          disabled={showOtp}
           aria-label="Email input field"
         />
-        {isNextStep ? (
+        {showOtp ? (
           <>
-            {/* <FormNotification /> */}
+            <p className={styles["message"]}>
+              &apos;We just sent you a temporary sign code. Please check your
+              inbox and paste code below.&apos;
+            </p>
             <TextField
               id="hash"
               name="hash"
               label="Sign up code"
               additionalLabel="It may take up to 2 minutes for the code to be sent."
-              value={values.hash}
               aria-label="OTP input field"
             />
           </>
@@ -62,7 +71,7 @@ const RegisterForm: FC = () => {
           aria-label="Submit form button"
           fullWidth
           isLoading={isSubmitting}
-          disabled={isSubmitting || !isValid || !dirty}
+          disabled={isSubmitting || !isValid || !isDirty}
         >
           Create new account
         </UIButton>
