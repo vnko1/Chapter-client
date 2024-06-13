@@ -18,6 +18,7 @@ export async function publicApi(endpoint: string, reqInit?: RequestInit) {
     reqOpt
   );
   const data = await res.json();
+
   if (!res.ok)
     throw new CustomError(
       data.statusCode,

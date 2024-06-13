@@ -37,22 +37,33 @@ const RegisterForm: FC = () => {
 
   const handleEmail = async (email: string) => {
     const res = await emailCreate(email);
+    console.log("🚀 ~ handleEmail ~ res:", res);
 
     if ("errorMessage" in res) {
       const [errorMessage, serviceMessage] = res.errorMessage.split("; ");
+      console.log("🚀 ~ handleEmail ~ errorMessage:", errorMessage);
       if (typeof serviceMessage === "string") {
-        if (serviceMessage.endsWith("completed")) {
-          setError("root.serverError", {
-            message: errorMessage,
-            type: "custom",
-          });
+        setError("root.serverError", {
+          message: errorMessage,
+          type: "custom",
+        });
 
-          setTimeout(() => push(LinksEnum.LOG_IN), 2000);
+        if (serviceMessage.endsWith("unconfirmed"))
+          return setTimeout(() => setShowOtp(true), 2000);
 
-          return;
-        }
+        if (serviceMessage.endsWith("confirmed"))
+          return setTimeout(() => push(LinksEnum.ACCOUNT_CREATION), 2000);
+
+        if (serviceMessage.endsWith("completed"))
+          return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
       }
+
+      return setError("root.serverError", {
+        message: errorMessage,
+        type: "custom",
+      });
     }
+
     // setShowOtp(true);
   };
 
