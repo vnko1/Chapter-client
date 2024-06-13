@@ -42,20 +42,22 @@ const RegisterForm: FC = () => {
     if ("errorMessage" in res) {
       const [errorMessage, serviceMessage] = res.errorMessage.split("; ");
       console.log("🚀 ~ handleEmail ~ errorMessage:", errorMessage);
+
       if (typeof serviceMessage === "string") {
         setError("root.serverError", {
           message: errorMessage,
           type: "custom",
         });
 
-        if (serviceMessage.endsWith("unconfirmed"))
-          return setTimeout(() => setShowOtp(true), 2000);
+        // if (serviceMessage.endsWith("unconfirmed"))
+        //   return setTimeout(() => setShowOtp(true), 2000);
 
-        if (serviceMessage.endsWith("confirmed"))
-          return setTimeout(() => push(LinksEnum.ACCOUNT_CREATION), 2000);
+        // if (serviceMessage.endsWith("confirmed"))
+        //   return setTimeout(() => push(LinksEnum.ACCOUNT_CREATION), 2000);
 
-        if (serviceMessage.endsWith("completed"))
-          return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
+        // if (serviceMessage.endsWith("completed"))
+        //   return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
+        return;
       }
 
       return setError("root.serverError", {

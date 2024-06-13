@@ -1,15 +1,15 @@
 import { IApiError } from "@/types";
 
 export class CustomError extends Error implements IApiError {
-  additionalMessage: string | undefined;
+  data: unknown | undefined;
   constructor(
     public statusCode: number,
     public path: string,
     public errorType: string,
     public errorMessage: string,
-    additionalMessage?: string
+    data?: unknown
   ) {
     super(errorMessage);
-    this.additionalMessage = additionalMessage;
+    this.data = data;
   }
 }

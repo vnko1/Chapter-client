@@ -25,7 +25,7 @@ export async function publicApi(endpoint: string, reqInit?: RequestInit) {
       data.path,
       data.errorType,
       data.errorMessage,
-      data?.message
+      data?.data
     );
   return data;
 }
