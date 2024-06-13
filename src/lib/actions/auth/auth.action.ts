@@ -1,8 +1,13 @@
-// "use server";
+"use server";
 
 import { publicApi } from "@/api";
 import { Endpoints } from "@/types";
+import { tryCatchWrapper } from "@/utils";
 
-export async function emailCreate(email: string) {
-  return await publicApi.post(Endpoints.Email_register, { email });
-}
+export const emailCreate = tryCatchWrapper(
+  async (email: string) =>
+    await publicApi(Endpoints.Email_register, {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    })
+);

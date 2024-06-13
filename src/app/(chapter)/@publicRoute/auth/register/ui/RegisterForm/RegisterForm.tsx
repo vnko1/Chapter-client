@@ -12,6 +12,8 @@ import { emailCreate } from "@/lib/actions";
 
 import { FormValues, validationSchema } from "./validationSchema";
 import styles from "./RegisterForm.module.scss";
+import { CustomError } from "@/services";
+import { LinksEnum } from "@/types";
 
 const initialValues: FormValues = {
   email: "",
@@ -29,18 +31,29 @@ const RegisterForm: FC = () => {
     mode: "all",
     resolver: zodResolver(validationSchema(validationType)),
   });
-  const { formState, handleSubmit } = methods;
+  const { formState, handleSubmit, setError } = methods;
   const { isValid, isSubmitting } = formState;
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const handleEmail = async (email: string) => {
-    try {
-      const res = await emailCreate(email);
-      console.log("🚀 ~ handleEmail ~ res:", res);
-      setShowOtp(true);
-    } catch (error) {
-      console.log("🚀 ~ handleEmail ~ error:", error.message);
+    const res = await emailCreate(email);
+
+    if ("errorMessage" in res) {
+      const [errorMessage, serviceMessage] = res.errorMessage.split("; ");
+      if (typeof serviceMessage === "string") {
+        if (serviceMessage.endsWith("completed")) {
+          setError("root.serverError", {
+            message: errorMessage,
+            type: "custom",
+          });
+
+          setTimeout(() => push(LinksEnum.LOG_IN), 2000);
+
+          return;
+        }
+      }
     }
+    // setShowOtp(true);
   };
 
   const handleOtp = async (otp: string) => {
@@ -78,7 +91,7 @@ const RegisterForm: FC = () => {
               id="otp"
               name="otp"
               label="Sign up code"
-              // additionalLabel="It may take up to 2 minutes for the code to be sent."
+              additionalLabel="It may take up to 2 minutes for the code to be sent."
               aria-label="OTP input field"
             />
           </>
@@ -94,6 +107,11 @@ const RegisterForm: FC = () => {
         >
           Create new account
         </UIButton>
+        {formState.errors.root?.serverError ? (
+          <p className={styles["form__error"]}>
+            {formState.errors.root?.serverError.message}
+          </p>
+        ) : null}
       </form>
     </FormProvider>
   );
