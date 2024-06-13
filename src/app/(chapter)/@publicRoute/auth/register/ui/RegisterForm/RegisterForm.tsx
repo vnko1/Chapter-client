@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { TextField, UIButton } from "@/components";
-import { emailCreate } from "@/lib";
+import { emailCreate } from "@/lib/actions";
 // import { LinksEnum } from "@/types";
 // import { getDataFromLS, setDataToLS } from "@/utils";
 
@@ -39,7 +39,7 @@ const RegisterForm: FC = () => {
       console.log("🚀 ~ handleEmail ~ res:", res);
       setShowOtp(true);
     } catch (error) {
-      console.log("🚀 ~ handleEmail ~ error:", error);
+      console.log("🚀 ~ handleEmail ~ error:", error.message);
     }
   };
 

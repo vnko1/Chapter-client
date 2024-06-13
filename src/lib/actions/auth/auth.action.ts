@@ -1,6 +1,8 @@
-"use server";
+// "use server";
+
+import { publicApi } from "@/api";
+import { Endpoints } from "@/types";
 
 export async function emailCreate(email: string) {
-  console.log("🚀 ~ emailCreate ~ email:", email);
-  return email;
+  return await publicApi.post(Endpoints.Email_register, { email });
 }
