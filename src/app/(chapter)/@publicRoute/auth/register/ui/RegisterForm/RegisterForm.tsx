@@ -6,16 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { TextField, UIButton } from "@/components";
-import { emailCreate } from "@/lib/actions";
-// import { LinksEnum } from "@/types";
-// import { getDataFromLS, setDataToLS } from "@/utils";
-
-import { FormValues, validationSchema } from "./validationSchema";
-import styles from "./RegisterForm.module.scss";
-import { CustomError } from "@/services";
 import { LinksEnum } from "@/types";
+import { emailConfirm, emailCreate } from "@/lib/actions";
 
-const initialValues: FormValues = {
+import { registerSchema, RegisterSchemaType } from "./validationSchema";
+import styles from "./RegisterForm.module.scss";
+import ResentOtp from "../ResentOtp/ResentOtp";
+
+const initialValues: RegisterSchemaType = {
   email: "",
   otp: "",
 };
@@ -24,36 +22,36 @@ const RegisterForm: FC = () => {
   const [showOtp, setShowOtp] = useState(false);
   const userId = useRef<string | null>(null);
 
-  const validationType = showOtp ? "otp" : "email";
-
-  const methods = useForm<FormValues>({
+  const methods = useForm<RegisterSchemaType>({
     values: initialValues,
-    mode: "all",
-    resolver: zodResolver(validationSchema(validationType)),
+    mode: "onSubmit",
+    resolver: zodResolver(registerSchema),
   });
-  const { formState, handleSubmit, setError } = methods;
-  const { isValid, isSubmitting } = formState;
+
+  const { formState, handleSubmit, setError, getValues } = methods;
+  const { isSubmitting } = formState;
   const { push } = useRouter();
 
   const handleEmail = async (email: string) => {
     const res = await emailCreate(email);
-    console.log("🚀 ~ handleEmail ~ res:", res.data);
 
-    if ("errorMessage" in res) {
-      const [errorMessage, serviceMessage] = res.errorMessage.split("; ");
-
+    if (res.isError) {
+      const [message, serviceMessage] = res.error.errorMessage.split("; ");
       if (typeof serviceMessage === "string") {
         setError("root.serverError", {
-          message: errorMessage,
+          message,
           type: "custom",
         });
 
-        if (serviceMessage.endsWith("unconfirmed"))
+        if (serviceMessage.endsWith("unconfirmed")) {
+          userId.current = res.error?.data.userId;
           return setTimeout(() => setShowOtp(true), 2000);
+        }
 
         if (serviceMessage.endsWith("confirmed"))
           return setTimeout(
-            () => push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId),
+            () =>
+              push(LinksEnum.ACCOUNT_CREATION + "/" + res.error?.data.userId),
             2000
           );
 
@@ -66,25 +64,36 @@ const RegisterForm: FC = () => {
       }
 
       return setError("root.serverError", {
-        message: errorMessage,
+        message,
         type: "custom",
       });
     }
 
-    // setShowOtp(true);
+    userId.current = res.data.userId;
+    setShowOtp(true);
   };
 
-  const handleOtp = async (otp: string) => {
-    try {
-      console.log("🚀 ~ otp:", otp);
-    } catch (error) {
-      console.log("🚀 ~ handleOtp ~ error:", error);
+  const handleOtp = async (otp: string | undefined) => {
+    const res = await emailConfirm({
+      otp: otp as string,
+      userId: userId.current as string,
+    });
+
+    if (res.isError) {
+      return setError("root.serverError", {
+        message: res.error?.errorMessage,
+        type: "custom",
+      });
     }
+
+    push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId);
   };
 
-  const onHandleSubmit: SubmitHandler<FormValues> = async (formValues) => {
-    if ("email" in formValues) return await handleEmail(formValues.email);
-    return await handleOtp(formValues.otp);
+  const onHandleSubmit: SubmitHandler<RegisterSchemaType> = async (
+    formValues
+  ) => {
+    if (showOtp) return await handleOtp(formValues.otp);
+    return await handleEmail(formValues.email);
   };
 
   return (
@@ -121,7 +130,7 @@ const RegisterForm: FC = () => {
           aria-label="Submit form button"
           fullWidth
           isLoading={isSubmitting}
-          disabled={isSubmitting || !isValid}
+          disabled={isSubmitting}
         >
           Create new account
         </UIButton>
@@ -130,6 +139,7 @@ const RegisterForm: FC = () => {
             {formState.errors.root?.serverError.message}
           </p>
         ) : null}
+        {showOtp ? <ResentOtp email={getValues("email")} /> : null}
       </form>
     </FormProvider>
   );
