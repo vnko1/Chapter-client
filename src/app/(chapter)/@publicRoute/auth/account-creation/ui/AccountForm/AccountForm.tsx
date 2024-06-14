@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { ChangeEvent, FC, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -9,6 +9,7 @@ import { AccountFormProps } from "./AccountForm.type";
 import { accountSchema, FormValues } from "./validationSchema";
 import styles from "./AccountForm.module.scss";
 import { useDebounce } from "@/hooks";
+import { emojiRegex } from "@/utils";
 
 const initialValues: FormValues = {
   fullName: "",
@@ -20,26 +21,46 @@ const initialValues: FormValues = {
 const AccountForm: FC<AccountFormProps> = () => {
   const methods = useForm<FormValues>({
     defaultValues: initialValues,
-    mode: "all",
+    mode: "onTouched",
     resolver: zodResolver(accountSchema),
   });
 
-  const { handleSubmit, formState, getValues } = methods;
+  const { handleSubmit, watch, setValue, formState } = methods;
   const { isValid, errors } = formState;
 
-  const debouncedNK = useDebounce(getValues("nickName"), 500);
-
-  const handleNKChange = (nickName: string) => {
-    console.log("🚀 ~ nickName:", nickName);
-  };
+  const debouncedNK = useDebounce(watch("nickName"), 500);
 
   useEffect(() => {
     if (debouncedNK) handleNKChange(debouncedNK);
   }, [debouncedNK]);
 
+  const onHandleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
+    if (
+      !e.currentTarget.value.startsWith("@") &&
+      e.currentTarget.value.length
+    ) {
+      return setValue(
+        "nickName",
+        "@" + e.currentTarget.value.replace(" ", "").replace(emojiRegex, "")
+      );
+    }
+    setValue(
+      "nickName",
+      e.currentTarget.value.replace(" ", "").replace(emojiRegex, "")
+    );
+  };
+
+  const handleNKChange = (nickName: string) => {
+    console.log("🚀 ~ nickName:", nickName);
+  };
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (debouncedNK) handleNKChange(debouncedNK);
+  }, [debouncedNK]);
 
   return (
     <FormProvider {...methods}>
@@ -57,9 +78,9 @@ const AccountForm: FC<AccountFormProps> = () => {
           name="nickName"
           label="Nickname"
           aria-label="Nickname input field"
-          value={debouncedNK}
           placeholder="@JaneSMTH"
           showSuccessIcon={true}
+          onChange={onHandleChangeNickname}
         />
         <PasswordField
           id="password"

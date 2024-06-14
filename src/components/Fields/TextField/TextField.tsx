@@ -1,6 +1,6 @@
 "use client";
 import { FC, ChangeEvent } from "react";
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
 import { IconEnum } from "@/types";
@@ -18,14 +18,14 @@ const TextField: FC<TextFieldProps> = ({
   showSuccessIcon = false,
   customErrorMessage,
   additionalLabel,
-
   onChange,
   ...props
 }) => {
-  const { register, setValue, getFieldState, getValues } = useFormContext();
+  const { field } = useController({ name });
+  const { register, setValue, getFieldState } = useFormContext();
   const { error, isTouched } = getFieldState(name);
 
-  const values = getValues(name);
+  const values = field.value;
 
   const isSuccessValidation = isTouched && !error;
   const isErrorValidation = isTouched && error;
@@ -36,6 +36,7 @@ const TextField: FC<TextFieldProps> = ({
 
   const onHandleChangeField = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(name, event.target.value);
+    field.onChange(event);
     onChange && onChange(event);
   };
 
@@ -47,6 +48,8 @@ const TextField: FC<TextFieldProps> = ({
           <input
             {...register(name)}
             id={id}
+            name={field.name}
+            value={field.value}
             type={type}
             {...props}
             className={styles["text-field__input"]}
