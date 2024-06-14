@@ -18,12 +18,14 @@ const TextField: FC<TextFieldProps> = ({
   showSuccessIcon = false,
   customErrorMessage,
   additionalLabel,
+
   onChange,
   ...props
 }) => {
   const { register, setValue, getFieldState, getValues } = useFormContext();
   const { error, isTouched } = getFieldState(name);
-  const value = getValues(name);
+
+  const values = getValues(name);
 
   const isSuccessValidation = isTouched && !error;
   const isErrorValidation = isTouched && error;
@@ -65,7 +67,7 @@ const TextField: FC<TextFieldProps> = ({
             {error.message as string}
           </p>
         ) : null}
-        {additionalLabel && !value.length ? (
+        {additionalLabel && !values.length ? (
           <p className={styles["text-field__additional-label"]}>
             {additionalLabel}
           </p>

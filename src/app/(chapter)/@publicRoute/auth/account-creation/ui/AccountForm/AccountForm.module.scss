@@ -1,5 +1,9 @@
 .form {
   @apply max-w-[327px] w-full mx-auto;
+
+  &__error {
+    @apply text-center text-xxs text-red;
+  }
 }
 
 .button {

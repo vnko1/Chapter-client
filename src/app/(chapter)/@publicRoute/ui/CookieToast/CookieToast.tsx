@@ -47,6 +47,7 @@ const CookieToast: FC = () => {
           alt="cookie popup image"
           width={560}
           height={214}
+          priority
         />
       </div>
     </div>
