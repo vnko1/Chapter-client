@@ -24,5 +24,5 @@ export async function publicApi(endpoint: string, reqInit?: RequestInit) {
 
   if (!res.ok) throw new CustomError(data);
 
-  return JSON.parse(data);
+  return data;
 }

@@ -36,7 +36,9 @@ const RegisterForm: FC = () => {
   const handleEmail = async (email: string) => {
     try {
       const res = await emailCreate(email);
-      if (res.isError) throw new CustomError(res.error);
+      console.log("🚀 ~ handleEmail ~ res:", res);
+
+      if (res && res.isError) throw new CustomError(res.error);
       userId.current = res.data.userId;
       setShowOtp(true);
     } catch (error) {
@@ -81,7 +83,7 @@ const RegisterForm: FC = () => {
         userId: userId.current as string,
       });
 
-      if (res.isError) throw new CustomError(res.error);
+      if (res && res.isError) throw new CustomError(res.error);
 
       push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId);
     } catch (error) {

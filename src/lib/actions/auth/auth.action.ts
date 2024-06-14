@@ -42,6 +42,7 @@ type AccountData = {
   nickName: string;
   password: string;
   userId: string;
+  cookieAccepted: boolean;
 };
 
 export const accountCreate = tryCatchWrapper(

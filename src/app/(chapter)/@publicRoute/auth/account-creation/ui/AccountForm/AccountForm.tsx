@@ -1,11 +1,13 @@
 "use client";
-import { ChangeEvent, FC, useEffect } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, UIButton } from "@/components";
+import { LinksEnum } from "@/types";
 import { useDebounce } from "@/hooks";
-import { emojiRegex } from "@/utils";
+import { emojiRegex, getDataFromLS } from "@/utils";
 import { CustomError } from "@/services";
 import { accountCreate, nicknameValidate } from "@/lib/actions";
 
@@ -21,6 +23,8 @@ const initialValues: FormValues = {
 };
 
 const AccountForm: FC<AccountFormProps> = ({ userId }) => {
+  const [cookieAccepted, setCookieAccepted] = useState(false);
+  const router = useRouter();
   const methods = useForm<FormValues>({
     defaultValues: initialValues,
     mode: "onTouched",
@@ -28,9 +32,15 @@ const AccountForm: FC<AccountFormProps> = ({ userId }) => {
   });
 
   const { handleSubmit, watch, setValue, formState, setError } = methods;
-  const { isValid, errors } = formState;
+  const { isValid, errors, isSubmitting } = formState;
 
   const debouncedNK = useDebounce(watch("nickName"), 500);
+
+  useEffect(() => {
+    const cookieIsAcceptedValue =
+      getDataFromLS<boolean>("cookieAccept") || false;
+    setCookieAccepted(cookieIsAcceptedValue);
+  }, []);
 
   useEffect(() => {
     if (debouncedNK) handleNKChange(debouncedNK);
@@ -75,9 +85,12 @@ const AccountForm: FC<AccountFormProps> = ({ userId }) => {
         firstName,
         lastName,
         userId,
+        cookieAccepted,
       });
 
       if (res && res.isError) throw new CustomError(res.error);
+
+      router.push(LinksEnum.LOG_IN);
     } catch (error) {
       if (error instanceof CustomError) {
         setError("root.serverError", {
@@ -127,8 +140,8 @@ const AccountForm: FC<AccountFormProps> = ({ userId }) => {
           type="submit"
           fullWidth
           className={styles["button"]}
-          disabled={!isValid}
-          //   isLoading={false}
+          disabled={!isValid || isSubmitting}
+          isLoading={isSubmitting}
           aria-label="Submit form button"
         >
           Save changes
