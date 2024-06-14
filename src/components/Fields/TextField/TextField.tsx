@@ -31,7 +31,7 @@ const TextField: FC<TextFieldProps> = ({
   const isErrorValidation = isTouched && error;
 
   const validationClassname = cn({
-    "text-field--has-error": isErrorValidation,
+    [styles["text-field--has-error"]]: isErrorValidation,
   });
 
   const onHandleChangeField = (event: ChangeEvent<HTMLInputElement>) => {
