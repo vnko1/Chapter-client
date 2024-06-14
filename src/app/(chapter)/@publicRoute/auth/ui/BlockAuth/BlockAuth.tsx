@@ -1,4 +1,7 @@
 import { FC } from "react";
+import Link from "next/link";
+
+import { LinksEnum } from "@/types";
 
 import { BlockAuthProps } from "./BlockAuth.type";
 import styles from "./BlockAuth.module.scss";
@@ -25,9 +28,12 @@ const BlockAuth: FC<BlockAuthProps> = ({
               By clicking {typePageText ? `"${typePageText}"` : null} above, you
               acknowledged that you have read and understood, and agree to
               Chapter&apos;s {""}
-              <a href="/" aria-label="Terms and conditions link">
+              <Link
+                href={LinksEnum.TERMS + "/1"}
+                aria-label="Terms and conditions link"
+              >
                 Terms & Conditions and Privacy Policy.
-              </a>
+              </Link>
             </p>
           </div>
         ) : null}

@@ -17,4 +17,12 @@ export enum LinksEnum {
   GUEST_BOOKS = "/:id/books",
   NOTIFICATION = "/notifications",
   GUEST_POST = "/post/:id",
+  TERMS = "/terms",
+}
+
+export enum OuterLinksEnum {
+  TELEGRAM = "https://t.me/ChapterTextBot",
+  LINKEDIN = "https://www.linkedin.com/company/chapter-socialnetwork/",
+  DISCORD = "https://discord.com/invite/6r7Qdwy7",
+  GMAIL = "mailto:Chapter.social.network@gmail.com",
 }
