@@ -12,7 +12,6 @@ export const tryCatchWrapper =
     } catch (error) {
       if (error instanceof CustomError)
         return JSONParser({ error, isError: true });
-
       if (error instanceof Error)
         return JSONParser({
           error: new CustomError({

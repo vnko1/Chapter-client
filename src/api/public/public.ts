@@ -17,8 +17,12 @@ export async function publicApi(endpoint: string, reqInit?: RequestInit) {
     process.env.NEXT_PUBLIC_SERVER_URL + endpoint,
     reqOpt
   );
+
+  if (res.status === 204) return null;
+
   const data = await res.json();
 
   if (!res.ok) throw new CustomError(data);
-  return data;
+
+  return JSON.parse(data);
 }

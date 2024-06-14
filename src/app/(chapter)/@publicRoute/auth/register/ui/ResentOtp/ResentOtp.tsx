@@ -5,17 +5,18 @@ import { resentOtp } from "@/lib/actions";
 
 import { ResentOtpProps } from "./ResentOtp.type";
 import styles from "./ResentOtp.module.scss";
+import { CustomError } from "@/services";
 
 const ResentOtp: FC<ResentOtpProps> = ({ email }) => {
   const [error, setError] = useState<string | null>(null);
   const onHandleClick = async () => {
     setError(null);
-    const res = await resentOtp(email);
+    try {
+      const res = await resentOtp(email);
 
-    if (res.isError) {
-      console.log("🚀 ~ onHandleClick ~ res:", res);
-
-      setError(res.error.errorMessage);
+      if (res && res.isError) throw new CustomError(res.error);
+    } catch (error) {
+      if (error instanceof CustomError) setError(error.errorMessage);
     }
   };
 
