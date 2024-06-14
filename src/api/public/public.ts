@@ -19,13 +19,6 @@ export async function publicApi(endpoint: string, reqInit?: RequestInit) {
   );
   const data = await res.json();
 
-  if (!res.ok)
-    throw new CustomError(
-      data.statusCode,
-      data.path,
-      data.errorType,
-      data.errorMessage,
-      data?.data
-    );
+  if (!res.ok) throw new CustomError(data);
   return data;
 }

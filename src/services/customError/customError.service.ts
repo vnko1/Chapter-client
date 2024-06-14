@@ -1,15 +1,18 @@
 import { IApiError } from "@/types";
 
 export class CustomError extends Error implements IApiError {
-  data: unknown | undefined;
-  constructor(
-    public statusCode: number,
-    public path: string,
-    public errorType: string,
-    public errorMessage: string,
-    data?: unknown
-  ) {
+  statusCode: number;
+  path: string;
+  errorType: string;
+  errorMessage: string;
+  data: { [key: string]: string } | null;
+
+  constructor({ statusCode, path, errorType, errorMessage, data }: IApiError) {
     super(errorMessage);
-    this.data = data;
+    this.statusCode = statusCode;
+    this.path = path;
+    this.errorType = errorType;
+    this.errorMessage = errorMessage;
+    this.data = data || null;
   }
 }

@@ -3,5 +3,5 @@ export interface IApiError {
   path: string;
   errorType: string;
   errorMessage: string;
-  message?: string;
+  data?: { [key: string]: string } | null;
 }

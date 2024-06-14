@@ -15,22 +15,22 @@ export const tryCatchWrapper =
 
       if (error instanceof Error)
         return JSONParser({
-          error: new CustomError(
-            500,
-            "Unknown Path",
-            "Unknown Error",
-            error.message
-          ),
+          error: new CustomError({
+            statusCode: 500,
+            path: "Unknown Path",
+            errorType: "Unknown Error",
+            errorMessage: error.message,
+          }),
           isError: true,
         });
 
       return JSONParser({
-        error: new CustomError(
-          500,
-          "Unknown Path",
-          "Unknown Error",
-          "Something went wrong! Try again later."
-        ),
+        error: new CustomError({
+          statusCode: 500,
+          path: "Unknown Path",
+          errorType: "Unknown Error",
+          errorMessage: "Something went wrong! Try again later.",
+        }),
         isError: true,
       });
     }

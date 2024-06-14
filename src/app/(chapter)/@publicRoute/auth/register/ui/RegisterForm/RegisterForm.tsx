@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { TextField, UIButton } from "@/components";
 import { LinksEnum } from "@/types";
+import { CustomError } from "@/services";
 import { emailConfirm, emailCreate } from "@/lib/actions";
 
 import { registerSchema, RegisterSchemaType } from "./validationSchema";
@@ -33,60 +34,61 @@ const RegisterForm: FC = () => {
   const { push } = useRouter();
 
   const handleEmail = async (email: string) => {
-    const res = await emailCreate(email);
-
-    if (res.isError) {
-      const [message, serviceMessage] = res.error.errorMessage.split("; ");
-      if (typeof serviceMessage === "string") {
-        setError("root.serverError", {
+    try {
+      const res = await emailCreate(email);
+      if (res.isError) throw new CustomError(res.error);
+      userId.current = res.data.userId;
+      setShowOtp(true);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        const [message, serviceMessage] = error.errorMessage.split("; ");
+        if (typeof serviceMessage === "string") {
+          setError("root.serverError", {
+            message,
+            type: "custom",
+          });
+          if (serviceMessage.endsWith("unconfirmed")) {
+            userId.current = error.data?.userId ?? null;
+            return setTimeout(() => setShowOtp(true), 2000);
+          }
+          if (serviceMessage.endsWith("confirmed"))
+            return setTimeout(
+              () => push(LinksEnum.ACCOUNT_CREATION + "/" + error.data?.userId),
+              2000
+            );
+          if (
+            serviceMessage.endsWith("completed") ||
+            serviceMessage.endsWith("restoring") ||
+            serviceMessage.endsWith("deleted")
+          )
+            return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
+        }
+        return setError("root.serverError", {
           message,
           type: "custom",
         });
-
-        if (serviceMessage.endsWith("unconfirmed")) {
-          userId.current = res.error?.data.userId;
-          return setTimeout(() => setShowOtp(true), 2000);
-        }
-
-        if (serviceMessage.endsWith("confirmed"))
-          return setTimeout(
-            () =>
-              push(LinksEnum.ACCOUNT_CREATION + "/" + res.error?.data.userId),
-            2000
-          );
-
-        if (
-          serviceMessage.endsWith("completed") ||
-          serviceMessage.endsWith("restoring") ||
-          serviceMessage.endsWith("deleted")
-        )
-          return setTimeout(() => push(LinksEnum.LOG_IN), 2000);
       }
-
-      return setError("root.serverError", {
-        message,
-        type: "custom",
-      });
     }
-
-    userId.current = res.data.userId;
-    setShowOtp(true);
   };
 
   const handleOtp = async (otp: string | undefined) => {
-    const res = await emailConfirm({
-      otp: otp as string,
-      userId: userId.current as string,
-    });
-
-    if (res.isError) {
-      return setError("root.serverError", {
-        message: res.error?.errorMessage,
-        type: "custom",
+    try {
+      const res = await emailConfirm({
+        otp: otp as string,
+        userId: userId.current as string,
       });
-    }
 
-    push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId);
+      if (res.isError) throw new CustomError(res.error);
+
+      push(LinksEnum.ACCOUNT_CREATION + "/" + res.data.userId);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        setError("root.serverError", {
+          message: error.errorMessage,
+          type: "custom",
+        });
+      }
+    }
   };
 
   const onHandleSubmit: SubmitHandler<RegisterSchemaType> = async (
