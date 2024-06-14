@@ -3,4 +3,5 @@ export enum EndpointsEnum {
   Email_confirm = "/auth/register/confirm",
   Resent_otp = "/auth/register/otp",
   Nickname_validation = "/auth/register/nickname",
+  Account_create = "/auth/register/account",
 }

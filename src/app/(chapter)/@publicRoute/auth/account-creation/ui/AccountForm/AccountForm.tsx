@@ -7,7 +7,7 @@ import { PasswordField, TextField, UIButton } from "@/components";
 import { useDebounce } from "@/hooks";
 import { emojiRegex } from "@/utils";
 import { CustomError } from "@/services";
-import { nicknameValidate } from "@/lib/actions";
+import { accountCreate, nicknameValidate } from "@/lib/actions";
 
 import { AccountFormProps } from "./AccountForm.type";
 import { accountSchema, FormValues } from "./validationSchema";
@@ -20,7 +20,7 @@ const initialValues: FormValues = {
   confirm_password: "",
 };
 
-const AccountForm: FC<AccountFormProps> = () => {
+const AccountForm: FC<AccountFormProps> = ({ userId }) => {
   const methods = useForm<FormValues>({
     defaultValues: initialValues,
     mode: "onTouched",
@@ -65,7 +65,27 @@ const AccountForm: FC<AccountFormProps> = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
+    const { confirm_password, fullName, ...formValues } = data;
+    confirm_password;
+    const [firstName, lastName] = fullName.split(" ");
+
+    try {
+      const res = await accountCreate({
+        ...formValues,
+        firstName,
+        lastName,
+        userId,
+      });
+
+      if (res && res.isError) throw new CustomError(res.error);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        setError("root.serverError", {
+          type: "custom",
+          message: error.errorMessage,
+        });
+      }
+    }
   };
 
   return (

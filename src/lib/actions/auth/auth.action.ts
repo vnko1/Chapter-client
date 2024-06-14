@@ -35,3 +35,19 @@ export const nicknameValidate = tryCatchWrapper(
       body: JSON.stringify({ nickName }),
     })
 );
+
+type AccountData = {
+  firstName: string;
+  lastName: string;
+  nickName: string;
+  password: string;
+  userId: string;
+};
+
+export const accountCreate = tryCatchWrapper(
+  async (data: AccountData) =>
+    await publicApi(EndpointsEnum.Account_create + "/" + data.userId, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    })
+);
