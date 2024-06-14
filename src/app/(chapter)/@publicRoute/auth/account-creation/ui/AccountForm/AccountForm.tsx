@@ -7,6 +7,7 @@ import { PasswordField, TextField, UIButton } from "@/components";
 import { useDebounce } from "@/hooks";
 import { emojiRegex } from "@/utils";
 import { CustomError } from "@/services";
+import { nicknameValidate } from "@/lib/actions";
 
 import { AccountFormProps } from "./AccountForm.type";
 import { accountSchema, FormValues } from "./validationSchema";
@@ -26,14 +27,26 @@ const AccountForm: FC<AccountFormProps> = () => {
     resolver: zodResolver(accountSchema),
   });
 
-  const { handleSubmit, watch, setValue, formState } = methods;
+  const { handleSubmit, watch, setValue, formState, setError } = methods;
   const { isValid, errors } = formState;
 
   const debouncedNK = useDebounce(watch("nickName"), 500);
 
   useEffect(() => {
     if (debouncedNK) handleNKChange(debouncedNK);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedNK]);
+
+  const handleNKChange = async (nickName: string) => {
+    try {
+      const res = await nicknameValidate(nickName);
+      if (res && res.isError) throw new CustomError(res.error);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        setError("nickName", { type: "onChange", message: error.errorMessage });
+      }
+    }
+  };
 
   const onHandleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     if (
@@ -51,21 +64,9 @@ const AccountForm: FC<AccountFormProps> = () => {
     );
   };
 
-  const handleNKChange = (nickName: string) => {
-    try {
-    } catch (error) {
-      if (error instanceof CustomError) {
-      }
-    }
-  };
-
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
   };
-
-  useEffect(() => {
-    if (debouncedNK) handleNKChange(debouncedNK);
-  }, [debouncedNK]);
 
   return (
     <FormProvider {...methods}>
