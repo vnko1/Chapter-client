@@ -4,12 +4,13 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, UIButton } from "@/components";
+import { useDebounce } from "@/hooks";
+import { emojiRegex } from "@/utils";
+import { CustomError } from "@/services";
 
 import { AccountFormProps } from "./AccountForm.type";
 import { accountSchema, FormValues } from "./validationSchema";
 import styles from "./AccountForm.module.scss";
-import { useDebounce } from "@/hooks";
-import { emojiRegex } from "@/utils";
 
 const initialValues: FormValues = {
   fullName: "",
@@ -51,7 +52,11 @@ const AccountForm: FC<AccountFormProps> = () => {
   };
 
   const handleNKChange = (nickName: string) => {
-    console.log("🚀 ~ nickName:", nickName);
+    try {
+    } catch (error) {
+      if (error instanceof CustomError) {
+      }
+    }
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {

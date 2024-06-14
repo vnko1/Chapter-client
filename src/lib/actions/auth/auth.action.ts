@@ -27,3 +27,11 @@ export const resentOtp = tryCatchWrapper(
       body: JSON.stringify({ email }),
     })
 );
+
+export const nicknameValidate = tryCatchWrapper(
+  async (nickName: string) =>
+    await publicApi(EndpointsEnum.Nickname_validation, {
+      method: "POST",
+      body: JSON.stringify({ nickName }),
+    })
+);
