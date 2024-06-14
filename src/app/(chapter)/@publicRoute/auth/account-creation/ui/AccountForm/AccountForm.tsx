@@ -1,12 +1,14 @@
 "use client";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { PasswordField, TextField, UIButton } from "@/components";
 
 import { AccountFormProps } from "./AccountForm.type";
 import { accountSchema, FormValues } from "./validationSchema";
 import styles from "./AccountForm.module.scss";
-import { PasswordField, TextField, UIButton } from "@/components";
+import { useDebounce } from "@/hooks";
 
 const initialValues: FormValues = {
   fullName: "",
@@ -22,9 +24,18 @@ const AccountForm: FC<AccountFormProps> = () => {
     resolver: zodResolver(accountSchema),
   });
 
-  const { handleSubmit, formState } = methods;
+  const { handleSubmit, formState, getValues } = methods;
   const { isValid, errors } = formState;
-  //   console.log("🚀 ~ errors:", errors);
+
+  const debouncedNK = useDebounce(getValues("nickName"), 500);
+
+  const handleNKChange = (nickName: string) => {
+    console.log("🚀 ~ nickName:", nickName);
+  };
+
+  useEffect(() => {
+    if (debouncedNK) handleNKChange(debouncedNK);
+  }, [debouncedNK]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
@@ -37,7 +48,7 @@ const AccountForm: FC<AccountFormProps> = () => {
           id="fullName"
           name="fullName"
           label="Full name"
-          placeholder="ex. John Brick, Dina O’neal, Jonathan... "
+          placeholder="ex. John Brick, Dina O'neal, Jonathan... "
           showSuccessIcon={true}
           aria-label="Full name input field"
         />
@@ -46,6 +57,7 @@ const AccountForm: FC<AccountFormProps> = () => {
           name="nickName"
           label="Nickname"
           aria-label="Nickname input field"
+          value={debouncedNK}
           placeholder="@JaneSMTH"
           showSuccessIcon={true}
         />
