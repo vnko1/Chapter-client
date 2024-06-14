@@ -29,7 +29,7 @@ const RegisterForm: FC = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { formState, handleSubmit, setError, getValues } = methods;
+  const { formState, handleSubmit, setError, getValues, clearErrors } = methods;
   const { isSubmitting } = formState;
   const { push } = useRouter();
 
@@ -49,7 +49,10 @@ const RegisterForm: FC = () => {
           });
           if (serviceMessage.endsWith("unconfirmed")) {
             userId.current = error.data?.userId ?? null;
-            return setTimeout(() => setShowOtp(true), 2000);
+            return setTimeout(() => {
+              clearErrors("root");
+              setShowOtp(true);
+            }, 2000);
           }
           if (serviceMessage.endsWith("confirmed"))
             return setTimeout(
