@@ -46,6 +46,10 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
       await login(res.data.access_token, res.data.refresh_token);
     } catch (error) {
       if (error instanceof CustomError) {
+        const [, serviceMessage] = error.errorMessage.split("; ");
+        if (serviceMessage?.endsWith("deleted"))
+          return router.push(LinksEnum.RESTORE);
+
         setError("root.serverError", {
           type: "custom",
           message: error.errorMessage,
