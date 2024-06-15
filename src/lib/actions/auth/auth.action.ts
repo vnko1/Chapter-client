@@ -69,3 +69,11 @@ export const resetPassword = tryCatchWrapper(
       body: JSON.stringify({ email }),
     })
 );
+
+type ChangePass = { password: string; otp: string };
+export const changePassword = tryCatchWrapper(async (data: ChangePass) =>
+  publicApi(EndpointsEnum.Update_pass, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  })
+);
