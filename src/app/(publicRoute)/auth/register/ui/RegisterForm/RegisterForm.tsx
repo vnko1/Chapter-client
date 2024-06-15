@@ -36,8 +36,6 @@ const RegisterForm: FC = () => {
   const handleEmail = async (email: string) => {
     try {
       const res = await emailCreate(email);
-      console.log("🚀 ~ handleEmail ~ res:", res);
-
       if (res && res.isError) throw new CustomError(res.error);
       userId.current = res.data.userId;
       setShowOtp(true);

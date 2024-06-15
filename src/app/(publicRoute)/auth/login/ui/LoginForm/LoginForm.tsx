@@ -47,10 +47,13 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
     } catch (error) {
       if (error instanceof CustomError) {
         const [, serviceMessage] = error.errorMessage.split("; ");
-        if (serviceMessage?.endsWith("deleted")) {
-          const deletedTimeStamp = error?.data.split(": ");
+        if (
+          serviceMessage?.endsWith("deleted") &&
+          typeof error?.data === "string"
+        ) {
+          const deletedTimeStamp = error?.data.split(": ")[1];
           return router.push(
-            LinksEnum.RESTORE + "?" + "deleted=" + error.data?.split(": ")[1]
+            LinksEnum.RESTORE + "?" + "deleted=" + deletedTimeStamp
           );
         }
 

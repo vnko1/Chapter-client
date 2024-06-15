@@ -9,7 +9,6 @@ async function LoginPage({
 }: {
   searchParams: { access_token?: string; refresh_token?: string };
 }) {
-  searchParams;
   return (
     <BlockAuth heading="Log in" showBottomText={true} typePageText="Log in">
       <div className="max-w-[327px] w-full mx-auto">

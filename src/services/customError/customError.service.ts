@@ -5,7 +5,8 @@ export class CustomError extends Error implements IApiError {
   path: string;
   errorType: string;
   errorMessage: string;
-  data: { [key: string]: string | object } | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
 
   constructor({ statusCode, path, errorType, errorMessage, data }: IApiError) {
     super(errorMessage);
