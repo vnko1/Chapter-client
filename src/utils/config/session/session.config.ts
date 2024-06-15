@@ -1,6 +1,6 @@
 import { SessionOptions } from "iron-session";
 
-const ttl = process.env.AUTH_SEESION_TOKEN_LIFE as string;
+const ttl = process.env.AUTH_SESSION_TOKEN_LIFE as string;
 
 export interface SessionData {
   access_token: string | null;

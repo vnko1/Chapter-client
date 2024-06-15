@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Icon, UIButton } from "@/components";
 import { GoogleAuthProps } from "./GoogleAuth.type";
 import styles from "./GoogleAuth.module.scss";
-import { IconEnum } from "@/types";
+import { IconEnum, OuterLinksEnum } from "@/types";
 
 const GoogleAuth: FC<GoogleAuthProps> = ({
   text = "Enter with google",
@@ -20,7 +20,7 @@ const GoogleAuth: FC<GoogleAuthProps> = ({
       color={buttonColor}
       size={buttonSize}
       aria-label="Google oAuth button"
-      href="/"
+      href={OuterLinksEnum.GOOGLE_CB}
     >
       <Icon icon={IconEnum.Google} size={iconSize} />
       <span>{text}</span>

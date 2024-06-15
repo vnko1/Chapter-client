@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import { defaultSession, sessionOptions, sleep } from "@/utils";
 import { type SessionData } from "@/utils";
 
+const rTokenLife = process.env.REFRESH_TOKEN_LIFE as string;
+
 export async function getSession(shouldSleep = true) {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
@@ -23,15 +25,21 @@ export async function logout() {
 
   const session = await getSession(false);
   session.destroy();
-  revalidatePath("/app-router-server-component-and-action");
+  cookies().delete("refresh_token");
+  revalidatePath("/");
 }
 
-export async function login(token: string) {
+export async function login(access_token: string, refresh_token: string) {
   "use server";
 
   const session = await getSession();
-  session.access_token = token;
+  session.access_token = access_token;
   session.isLoggedIn = true;
   await session.save();
+  cookies().set("refresh_token", refresh_token, {
+    httpOnly: true,
+    secure: true,
+    maxAge: +rTokenLife - 60,
+  });
   revalidatePath("/");
 }

@@ -25,4 +25,5 @@ export enum OuterLinksEnum {
   LINKEDIN = "https://www.linkedin.com/company/chapter-socialnetwork/",
   DISCORD = "https://discord.com/invite/6r7Qdwy7",
   GMAIL = "mailto:Chapter.social.network@gmail.com",
+  GOOGLE_CB = "http://localhost:3001/auth/google",
 }
