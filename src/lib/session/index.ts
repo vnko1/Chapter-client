@@ -1,3 +1,4 @@
+"use server";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
@@ -21,8 +22,6 @@ export async function getSession(shouldSleep = true) {
 }
 
 export async function logout() {
-  "use server";
-
   const session = await getSession(false);
   session.destroy();
   cookies().delete("refresh_token");
@@ -30,8 +29,6 @@ export async function logout() {
 }
 
 export async function login(access_token: string, refresh_token: string) {
-  "use server";
-
   const session = await getSession();
   session.access_token = access_token;
   session.isLoggedIn = true;

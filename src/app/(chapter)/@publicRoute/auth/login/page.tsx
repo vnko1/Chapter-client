@@ -3,7 +3,7 @@ import React from "react";
 import { LinksEnum } from "@/types";
 import { AuthLink, BlockAuth, Delimiter, GoogleAuth } from "../ui";
 
-function LoginPage({
+async function LoginPage({
   searchParams,
 }: {
   searchParams: { access_token?: string; refresh_token?: string };
