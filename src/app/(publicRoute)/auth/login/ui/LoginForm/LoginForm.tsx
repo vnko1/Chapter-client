@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, UIButton } from "@/components";
 import { CustomError } from "@/services";
-import { LinksEnum } from "@/types";
 import { login } from "@/lib/session";
 import { signIn } from "@/lib/actions";
 
@@ -32,9 +31,8 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
 
   useEffect(() => {
     if (access_token && refresh_token) {
-      login(access_token, refresh_token).then(() => {
-        router.replace(LinksEnum.HOME);
-      });
+      login(access_token, refresh_token);
+      router.replace(pathname);
     }
   }, [access_token, pathname, refresh_token, router]);
 
