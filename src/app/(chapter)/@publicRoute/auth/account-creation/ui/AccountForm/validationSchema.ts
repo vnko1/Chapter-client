@@ -1,5 +1,5 @@
-import { baseValidation, nickNameCharsRegex, simpleStringRegex } from "@/utils";
 import { z } from "zod";
+import { baseValidation, nickNameCharsRegex, simpleStringRegex } from "@/utils";
 
 export const accountSchema = z
   .object({

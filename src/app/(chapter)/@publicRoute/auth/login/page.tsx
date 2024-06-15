@@ -2,6 +2,7 @@ import React from "react";
 
 import { LinksEnum } from "@/types";
 import { AuthLink, BlockAuth, Delimiter, GoogleAuth } from "../ui";
+import { LoginForm } from "./ui";
 
 async function LoginPage({
   searchParams,
@@ -12,7 +13,10 @@ async function LoginPage({
   return (
     <BlockAuth heading="Log in" showBottomText={true} typePageText="Log in">
       <div className="max-w-[327px] w-full mx-auto">
-        {/* <RegisterForm /> */}
+        <LoginForm
+          access_token={searchParams.access_token}
+          refresh_token={searchParams.refresh_token}
+        />
         <Delimiter />
         <GoogleAuth />
         <AuthLink
