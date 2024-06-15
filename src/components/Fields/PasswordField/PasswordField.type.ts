@@ -8,6 +8,10 @@ export type PasswordFieldProps = {
   classNames?: string;
   strengthMessage?: string;
   additionalLabel?: string;
+  helperLink?: {
+    text: string;
+    href: string;
+  };
 } & Partial<Omit<InputHTMLAttributes<HTMLInputElement>, "type">>;
 
 export enum TypePasswordStrength {

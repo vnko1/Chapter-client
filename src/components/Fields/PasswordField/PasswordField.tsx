@@ -10,6 +10,7 @@ import { Icon } from "@/components";
 import { PasswordFieldProps, TypePasswordStrength } from "./PasswordField.type";
 import { usePasswordStrength } from "./usePasswordStrength";
 import styles from "./PasswordField.module.scss";
+import Link from "next/link";
 
 const PasswordField: FC<PasswordFieldProps> = ({
   id,
@@ -20,7 +21,7 @@ const PasswordField: FC<PasswordFieldProps> = ({
   defaultValue,
   strength,
   strengthMessage = "Password must be at least 8 characters long, include only Latin letters, one uppercase letter, one number, space symbol mustn't be included",
-
+  helperLink,
   additionalLabel,
 
   onChange,
@@ -96,6 +97,14 @@ const PasswordField: FC<PasswordFieldProps> = ({
           <p className={styles["text-field__label-sub-text"]}>
             {additionalLabel}
           </p>
+        ) : null}
+        {helperLink ? (
+          <Link
+            href={helperLink.href}
+            className={styles["text-field__helper-link"]}
+          >
+            {helperLink.text}
+          </Link>
         ) : null}
       </div>
       {strength && passwordValue && values.length && passwordStrength >= 0 ? (

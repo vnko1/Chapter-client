@@ -61,3 +61,11 @@ export const signIn = tryCatchWrapper(
       body: JSON.stringify(data),
     })
 );
+
+export const resetPassword = tryCatchWrapper(
+  async (email: string) =>
+    await publicApi(EndpointsEnum.Reset_pass, {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    })
+);

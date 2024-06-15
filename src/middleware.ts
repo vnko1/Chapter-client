@@ -12,14 +12,18 @@ export async function middleware(req: NextRequest) {
     sessionOptions
   );
 
-  if (currentPath.endsWith(LinksEnum.HOME) && isLoggedIn)
-    return NextResponse.rewrite(new URL(LinksEnum.DASHBOARD, req.url));
+  if (isLoggedIn) {
+    if (currentPath.endsWith(LinksEnum.HOME))
+      return NextResponse.rewrite(new URL(LinksEnum.DASHBOARD, req.url));
 
-  if (currentPath.startsWith(LinksEnum.AUTH) && isLoggedIn)
-    return NextResponse.rewrite(new URL(LinksEnum.DASHBOARD, req.url));
+    if (currentPath.startsWith(LinksEnum.AUTH))
+      return NextResponse.rewrite(new URL(LinksEnum.DASHBOARD, req.url));
+  }
 
-  if (currentPath.startsWith(LinksEnum.DASHBOARD) && !isLoggedIn)
-    return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
+  if (!isLoggedIn) {
+    if (currentPath.startsWith(LinksEnum.DASHBOARD))
+      return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
+  }
 }
 
 export const config = {

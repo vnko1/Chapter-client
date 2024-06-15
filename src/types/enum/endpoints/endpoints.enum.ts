@@ -5,4 +5,6 @@ export enum EndpointsEnum {
   Nickname_validation = "/auth/register/nickname",
   Account_create = "/auth/register/account",
   Login = "/auth/login",
+  Reset_pass = "/auth/pass-reset",
+  Update_pass = "/auth/pass-upd",
 }

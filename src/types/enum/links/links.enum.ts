@@ -9,7 +9,7 @@ export enum LinksEnum {
   DASHBOARD = "/dashboard",
   SETTINGS = "/settings",
   NOT_FOUND = "/404",
-  PASSWORD_CHANGE = "/auth/password-change",
+  PASSWORD_CHANGE = "/auth/change-password",
   PROFILE = "/profile",
   GUEST_PROFILE = "/:Id",
   USER_BOOKS = "/books",

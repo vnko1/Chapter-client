@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, UIButton } from "@/components";
 import { CustomError } from "@/services";
+import { LinksEnum } from "@/types";
 import { login } from "@/lib/session";
 import { signIn } from "@/lib/actions";
 
@@ -67,6 +68,10 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
           name="password"
           label="Your password"
           aria-label="Password field input"
+          helperLink={{
+            text: "Forgot password?",
+            href: LinksEnum.FORGOT_PASSWORD,
+          }}
         />
         <UIButton
           type="submit"
