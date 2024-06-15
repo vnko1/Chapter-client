@@ -131,7 +131,7 @@ const RegisterForm: FC = () => {
           </>
         ) : null}
         <UIButton
-          className={styles["form__button"]}
+          classNames={styles["form__button"]}
           dataAutomation="submitButton"
           type="submit"
           aria-label="Submit form button"

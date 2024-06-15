@@ -7,7 +7,7 @@ export type ButtonSizeType = "small" | "medium" | "large";
 export type AlignIconType = "left" | "right";
 
 export type UIButtonProps = {
-  className?: string;
+  classNames?: string;
   color?: ButtonColorType;
   variant?: ButtonVariantType;
   size?: ButtonSizeType;

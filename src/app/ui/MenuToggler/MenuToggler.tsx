@@ -27,7 +27,7 @@ const MenuToggler: FC<MenuTogglerProps> = ({
 
   return (
     <UIButton
-      className={`${styles["menu-toggler"]} ${classNames}`}
+      classNames={`${styles["menu-toggler"]} ${classNames}`}
       onClick={handleClick}
       variant="text"
       aria-label="Toggler button"

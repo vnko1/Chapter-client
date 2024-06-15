@@ -52,3 +52,12 @@ export const accountCreate = tryCatchWrapper(
       body: JSON.stringify(data),
     })
 );
+
+type LoginData = { email: string; password: string };
+export const signIn = tryCatchWrapper(
+  async (data: LoginData) =>
+    await publicApi(EndpointsEnum.Login, {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+);

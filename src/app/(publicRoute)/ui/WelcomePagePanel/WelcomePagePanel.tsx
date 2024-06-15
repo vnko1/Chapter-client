@@ -16,7 +16,6 @@ const WelcomePagePanel: FC = () => {
           <UIButton
             size="large"
             fullWidth
-            dataAutomation="navigationButton"
             href={LinksEnum.SIGN_UP}
             aria-label="Sign up nav link"
           >
@@ -25,7 +24,6 @@ const WelcomePagePanel: FC = () => {
           <UIButton
             size="large"
             fullWidth
-            dataAutomation="navigationButton"
             variant="outlined"
             href={LinksEnum.LOG_IN}
             aria-label="Log in nav link"

@@ -14,7 +14,7 @@ const GoogleAuth: FC<GoogleAuthProps> = ({
 }) => {
   return (
     <UIButton
-      className={`${styles["oauth-btn"]} ${classNames}`}
+      classNames={`${styles["oauth-btn"]} ${classNames}`}
       fullWidth
       variant={buttonVariant}
       color={buttonColor}

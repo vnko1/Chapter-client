@@ -139,7 +139,7 @@ const AccountForm: FC<AccountFormProps> = ({ userId }) => {
         <UIButton
           type="submit"
           fullWidth
-          className={styles["button"]}
+          classNames={styles["button"]}
           disabled={!isValid || isSubmitting}
           isLoading={isSubmitting}
           aria-label="Submit form button"

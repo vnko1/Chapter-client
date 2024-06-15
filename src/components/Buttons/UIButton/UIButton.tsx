@@ -10,7 +10,7 @@ import "./UIButton.scss";
 
 const UIbutton: FC<UIButtonProps> = ({
   isLoading = false,
-  className,
+  classNames,
   children,
   fullWidth,
   color = "primary",
@@ -59,7 +59,7 @@ const UIbutton: FC<UIButtonProps> = ({
     {
       "btn--fullwidth": fullWidth,
     },
-    className
+    classNames
   );
 
   if (href) {

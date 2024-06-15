@@ -2,9 +2,11 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { defaultSession, sessionOptions, sleep } from "@/utils";
 import { type SessionData } from "@/utils";
+import { LinksEnum } from "@/types";
 
 const rTokenLife = process.env.REFRESH_TOKEN_LIFE as string;
 
@@ -25,11 +27,12 @@ export async function logout() {
   const session = await getSession(false);
   session.destroy();
   cookies().delete("refresh_token");
-  revalidatePath("/");
+  revalidatePath(LinksEnum.HOME);
 }
 
 export async function login(access_token: string, refresh_token: string) {
   const session = await getSession();
+
   session.access_token = access_token;
   session.isLoggedIn = true;
   await session.save();
@@ -38,5 +41,6 @@ export async function login(access_token: string, refresh_token: string) {
     secure: true,
     maxAge: +rTokenLife - 60,
   });
-  revalidatePath("/", "layout");
+  revalidatePath(LinksEnum.HOME);
+  redirect(LinksEnum.HOME);
 }
