@@ -5,7 +5,7 @@ export class CustomError extends Error implements IApiError {
   path: string;
   errorType: string;
   errorMessage: string;
-  data: { [key: string]: string } | null;
+  data: { [key: string]: string | object } | null;
 
   constructor({ statusCode, path, errorType, errorMessage, data }: IApiError) {
     super(errorMessage);
