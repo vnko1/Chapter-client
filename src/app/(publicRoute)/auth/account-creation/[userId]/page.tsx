@@ -1,6 +1,6 @@
 import React from "react";
-import { CookieToast } from "../../../ui";
-import { BlockAuth } from "../../ui";
+
+import { BlockAuth, CookieToast } from "../../ui";
 import { AccountForm } from "../ui";
 
 function AccountCreationPage({

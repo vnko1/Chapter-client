@@ -6,7 +6,7 @@ export enum LinksEnum {
   LOG_IN = "/auth/login",
   FORGOT_PASSWORD = "/auth/forgot-password",
   RESTORE = "/auth/restore",
-  FEED = "/feed",
+  DASHBOARD = "/dashboard",
   SETTINGS = "/settings",
   NOT_FOUND = "/404",
   PASSWORD_CHANGE = "/auth/password-change",

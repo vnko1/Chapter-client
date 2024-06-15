@@ -2,7 +2,7 @@ import React from "react";
 
 import { WelcomePageImage, WelcomePagePanel } from "./ui";
 
-import styles from "./publicRoute.module.scss";
+import styles from "./homePage.module.scss";
 
 function WelcomePage() {
   return (

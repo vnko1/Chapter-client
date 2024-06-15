@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 
 import { defaultSession, sessionOptions, sleep } from "@/utils";
 import { type SessionData } from "@/utils";
-import { redirect } from "next/navigation";
 
 const rTokenLife = process.env.REFRESH_TOKEN_LIFE as string;
 
@@ -39,6 +38,5 @@ export async function login(access_token: string, refresh_token: string) {
     secure: true,
     maxAge: +rTokenLife - 60,
   });
-  revalidatePath("/");
-  redirect("/");
+  revalidatePath("/", "layout");
 }
