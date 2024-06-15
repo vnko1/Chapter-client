@@ -41,7 +41,7 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
     try {
       const res = await signIn(data);
 
-      if (res.isError) throw new CustomError(res.error);
+      if (res?.isError) throw new CustomError(res.error);
 
       await login(res.data.access_token, res.data.refresh_token);
     } catch (error) {
