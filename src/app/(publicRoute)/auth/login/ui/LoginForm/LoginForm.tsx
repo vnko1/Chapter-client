@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, UIButton } from "@/components";
 import { CustomError } from "@/services";
+import { setDataToSS } from "@/utils";
 import { LinksEnum } from "@/types";
 import { login } from "@/lib/session";
 import { signIn } from "@/lib/actions";
@@ -52,9 +53,8 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
           typeof error?.data === "string"
         ) {
           const deletedTimeStamp = error?.data.split(": ")[1];
-          return router.push(
-            LinksEnum.RESTORE + "?" + "deleted=" + deletedTimeStamp
-          );
+          setDataToSS({ deletedTimeStamp, email: data.email });
+          return router.push(LinksEnum.RESTORE);
         }
 
         setError("root.serverError", {

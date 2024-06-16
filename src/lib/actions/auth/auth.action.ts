@@ -77,3 +77,17 @@ export const changePassword = tryCatchWrapper(async (data: ChangePass) =>
     body: JSON.stringify(data),
   })
 );
+
+export const restoreAccount = tryCatchWrapper(async (email: string) =>
+  publicApi(EndpointsEnum.Restore_acc, {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  })
+);
+
+export const confirmAccountRestore = tryCatchWrapper(async (otp: string) =>
+  publicApi(EndpointsEnum.Confirm_restore_acc, {
+    method: "POST",
+    body: JSON.stringify({ otp }),
+  })
+);

@@ -1,6 +1,4 @@
-type StorageKeyValue = {
-  [key: string]: string | number | string[];
-};
+import { StorageKeyValue } from "@/types";
 
 export const setDataToLS = (data: StorageKeyValue) =>
   Object.keys(data).map((name) =>
