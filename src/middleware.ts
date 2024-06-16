@@ -24,6 +24,8 @@ export async function middleware(req: NextRequest) {
     if (currentPath.startsWith(LinksEnum.DASHBOARD))
       return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
