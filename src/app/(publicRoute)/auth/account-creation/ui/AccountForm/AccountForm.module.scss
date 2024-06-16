@@ -1,0 +1,11 @@
+.form {
+  @apply max-w-[327px] w-full mx-auto;
+
+  &__error {
+    @apply text-center text-xxs text-red;
+  }
+}
+
+.button {
+  @apply min-h-[42px] md:min-h-[44px] laptop:min-h-[50px] p-[12px] text-sm;
+}
