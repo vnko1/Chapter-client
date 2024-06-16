@@ -1,15 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 
 import { NavigationStateContext } from "./hook";
 import { NavigationContextProps } from "./NavigationProvider.type";
 
 const navActiveClassName = "nav-active";
 
-export default function NavigationProvider({
+const NavigationProvider: FC<NavigationContextProps> = ({
   children,
   ...props
-}: NavigationContextProps) {
+}) => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
 
   useEffect(() => {
@@ -31,4 +31,6 @@ export default function NavigationProvider({
       {children}
     </NavigationStateContext.Provider>
   );
-}
+};
+
+export default NavigationProvider;
