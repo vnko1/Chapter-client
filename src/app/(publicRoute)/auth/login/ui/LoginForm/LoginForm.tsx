@@ -41,11 +41,16 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await signIn(data);
+      console.log("🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ res:", res);
 
       if (res?.isError) throw new CustomError(res.error);
 
-      await login(res.data.access_token);
+      await login(res.access_token);
     } catch (error) {
+      console.log(
+        "🚀 ~ constonSubmit:SubmitHandler<FormValues>= ~ error:",
+        error
+      );
       if (error instanceof CustomError) {
         const [, serviceMessage] = error.errorMessage.split("; ");
         if (

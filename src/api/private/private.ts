@@ -8,10 +8,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 export const privateApi = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
-  method: "get, post, put, delete, patch",
-  headers: {
-    "X-Requested-With": "XMLHttpRequest",
-  },
 });
 
 privateApi.interceptors.request.use(
