@@ -5,6 +5,7 @@ import { ProfileProviderProps } from "./ProfileProvider.type";
 import { ProfileContext } from "./hook";
 import { EndpointsEnum, IUser } from "@/types";
 import { privateApi } from "@/api";
+import { logout } from "@/lib/session";
 
 const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -17,6 +18,7 @@ const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
 
   return (
     <ProfileContext.Provider value={{ user, setUser }}>
+      <button onClick={() => logout()}>LOGOUT</button>
       {children}
     </ProfileContext.Provider>
   );

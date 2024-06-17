@@ -28,6 +28,7 @@ export async function logout() {
   session.destroy();
   cookies().delete("refresh_token");
   revalidatePath(LinksEnum.HOME);
+  redirect(LinksEnum.HOME);
 }
 
 export async function login(access_token: string, refresh_token: string) {
