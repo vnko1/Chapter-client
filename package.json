@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.6.0",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
+    "fetch-retry": "^6.0.0",
     "iron-session": "^8.0.1",
     "next": "^14.1.4",
     "react": "^18",

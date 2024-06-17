@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { defaultSession, sessionOptions, sleep } from "@/utils";
+import { defaultSession, JSONParser, sessionOptions, sleep } from "@/utils";
 import { type SessionData } from "@/utils";
 import { LinksEnum } from "@/types";
 
@@ -43,4 +43,9 @@ export async function login(access_token: string, refresh_token: string) {
   });
   revalidatePath(LinksEnum.HOME);
   redirect(LinksEnum.HOME);
+}
+
+export async function getParsedSession() {
+  const data = await getSession();
+  return JSONParser(data);
 }
