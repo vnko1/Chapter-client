@@ -1,11 +1,11 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type ModalProps = {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  close: () => void;
   children: ReactNode;
   active: boolean;
   visible: boolean;
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  close: () => void;
   classNames?: string;
   activeClassNames?: string;
   axis?: "clientX" | "clientY";
