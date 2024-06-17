@@ -8,8 +8,6 @@ import { defaultSession, JSONParser, sessionOptions, sleep } from "@/utils";
 import { type SessionData } from "@/utils";
 import { LinksEnum } from "@/types";
 
-const rTokenLife = process.env.REFRESH_TOKEN_LIFE as string;
-
 export async function getSession(shouldSleep = true) {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
@@ -26,21 +24,17 @@ export async function getSession(shouldSleep = true) {
 export async function logout() {
   const session = await getSession(false);
   session.destroy();
-  cookies().delete("refresh_token");
+
   revalidatePath(LinksEnum.HOME);
 }
 
-export async function login(access_token: string, refresh_token: string) {
+export async function login(access_token: string) {
   const session = await getSession();
 
   session.access_token = access_token;
   session.isLoggedIn = true;
   await session.save();
-  cookies().set("refresh_token", refresh_token, {
-    httpOnly: true,
-    secure: true,
-    maxAge: +rTokenLife - 60,
-  });
+
   revalidatePath(LinksEnum.HOME);
   redirect(LinksEnum.HOME);
 }
