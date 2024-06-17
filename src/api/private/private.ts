@@ -8,6 +8,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 export const privateApi = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
+
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+  },
 });
 
 privateApi.interceptors.request.use(
@@ -29,7 +33,9 @@ privateApi.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log("🚀 ~ error:", error);
     const { access_token } = await getParsedSession();
+    console.log("🚀 ~ access_token:", access_token);
 
     if (!access_token) return Promise.reject(error);
 
