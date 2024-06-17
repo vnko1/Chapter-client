@@ -35,7 +35,9 @@ privateApi.interceptors.response.use(
   async (error) => {
     const { access_token } = await getParsedSession();
 
-    if (!access_token) return Promise.reject(error);
+    if (!access_token) {
+      return Promise.reject(error);
+    }
 
     const originalRequest = error.config;
 
@@ -46,17 +48,15 @@ privateApi.interceptors.response.use(
     ) {
       error.config._isRetry = true;
       try {
-        const {
-          data: { access_token, refresh_token },
-        }: AxiosResponse = await axios.post(
+        const res: AxiosResponse = await axios.post(
           BASE_URL + EndpointsEnum.Refresh_Token,
           null,
           {
             withCredentials: true,
           }
         );
-        console.log("🚀 ~ refresh_token:", refresh_token);
-        await login(access_token, refresh_token);
+
+        await login(res.data.data.access_token, res.data.data.refresh_token);
 
         return privateApi.request(originalRequest);
       } catch (e) {

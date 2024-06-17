@@ -11,7 +11,7 @@ const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
 
   useEffect(() => {
     privateApi(EndpointsEnum.Profile).then((res) => {
-      console.log("🚀 ~ privateApi ~ res:", res);
+      // console.log("🚀 ~ privateApi ~ res:", res);
     });
   }, []);
 
