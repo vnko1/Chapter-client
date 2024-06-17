@@ -40,7 +40,7 @@ export async function login(access_token: string, refresh_token: string) {
   cookies().set("refresh_token", refresh_token, {
     httpOnly: true,
     secure: true,
-    maxAge: +rTokenLife + 180,
+    maxAge: +rTokenLife,
   });
   revalidatePath(LinksEnum.HOME);
   redirect(LinksEnum.HOME);
