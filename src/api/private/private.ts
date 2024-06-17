@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 
 import { EndpointsEnum } from "@/types";
-import { getParsedSession } from "@/lib/session";
+import { getParsedSession, login, logout } from "@/lib/session";
+
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-const api = axios.create({
+export const privateApi = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
   method: "get, post, put, delete, patch",
@@ -13,7 +14,7 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
+privateApi.interceptors.request.use(
   async (config) => {
     const { access_token } = await getParsedSession();
 
@@ -27,7 +28,7 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
+privateApi.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -46,24 +47,22 @@ api.interceptors.response.use(
       error.config._isRetry = true;
       try {
         const {
-          data: { token },
-        }: AxiosResponse<CredType> = await axios.post(
+          data: { access_token },
+        }: AxiosResponse = await axios.post(
           BASE_URL + EndpointsEnum.Refresh_Token,
           null,
           {
             withCredentials: true,
           }
         );
-        // await handleAuth(token);
+        await login(access_token);
 
-        return api.request(originalRequest);
+        return privateApi.request(originalRequest);
       } catch (e) {
-        // logout();
+        logout();
         return Promise.reject(error);
       }
     }
     throw error;
   }
 );
-
-export default api;
