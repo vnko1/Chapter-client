@@ -34,7 +34,7 @@
   }
 
   .add-post-button {
-    @apply hidden md:inline-flex md:ml-4;
+    @apply hidden md:inline-flex md:ml-4 max-h-[52px];
   }
 }
 

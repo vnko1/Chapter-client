@@ -1,9 +1,11 @@
 import { FC } from "react";
+import Image from "next/image";
 import cn from "classnames";
 
 import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
-import Image from "next/image";
+
+import default_avatar from "@/assets/svg/default_avatar.svg";
 
 const Avatar: FC<AvatarProps> = ({
   src,
@@ -28,9 +30,11 @@ const Avatar: FC<AvatarProps> = ({
       )}
     >
       <Image
-        src={src}
+        src={src ? src : default_avatar}
         alt={alt}
         className={styles["user-avatar__image"]}
+        width={190}
+        height={190}
         onClick={onHandleClick}
         id="avatar"
       />

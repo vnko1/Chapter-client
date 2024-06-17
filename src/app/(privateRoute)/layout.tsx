@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { NavigationTogglerProvider, ProfileProvider } from "@/context";
+import { ProfileHeader, SidebarNavigation } from "./ui";
 import styles from "./privateLayout.module.scss";
-import { SidebarNavigation } from "./ui";
 
 function PrivateLayout({ children }: { children: ReactNode }) {
   return (
@@ -9,6 +9,7 @@ function PrivateLayout({ children }: { children: ReactNode }) {
       <div className={styles["profile-layout"]}>
         <NavigationTogglerProvider>
           <SidebarNavigation />
+          <ProfileHeader />
         </NavigationTogglerProvider>
         <main>{children}</main>
       </div>
