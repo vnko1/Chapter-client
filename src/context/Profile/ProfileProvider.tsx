@@ -16,7 +16,9 @@ const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
       .then((res) => {
         setUser(res.data.data);
       })
-      .catch(() => logout());
+      .catch(async () => {
+        await logout();
+      });
   }, []);
 
   return (
