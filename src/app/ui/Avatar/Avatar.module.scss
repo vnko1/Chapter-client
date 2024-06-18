@@ -22,6 +22,10 @@
     @apply flex flex-col gap-2-md;
     & > button {
       @apply bg-transparent text-start;
+
+      &:hover {
+        @apply text-primaryHover;
+      }
     }
   }
 }
