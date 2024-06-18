@@ -1,15 +1,14 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 
-import { Loader } from "@/components";
+import { Loader, PostForm } from "@/components";
+import { useModal } from "@/hooks";
 import { EndpointsEnum, IUser } from "@/types";
 import { privateApi } from "@/api";
 import { logout } from "@/lib/session";
 
 import { ProfileContext } from "./hook";
 import { ProfileProviderProps } from "./ProfileProvider.type";
-import { useModal } from "@/hooks";
-import { CreatePost } from "./components";
 
 const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -34,7 +33,7 @@ const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
     >
       {children}
       <Loader active={isLoading} />
-      <CreatePost {...postModal} user={user} enableSwipe />
+      <PostForm {...postModal} user={user} enableSwipe type="create" />
     </ProfileContext.Provider>
   );
 };

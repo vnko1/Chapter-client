@@ -22,7 +22,7 @@ export const postSchema = z
     image: z
       .any()
       .refine((image) => {
-        return image.size <= MAX_FILE_SIZE;
+        return image?.size <= MAX_FILE_SIZE;
       }, `Max image size is 3MB.`)
       .refine((image) => {
         return ACCEPTED_IMAGE_TYPES.includes(image?.mimetype);

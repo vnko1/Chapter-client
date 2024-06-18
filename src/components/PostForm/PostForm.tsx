@@ -7,17 +7,18 @@ import Image from "next/image";
 import { Icon, Modal } from "@/components";
 import { IconEnum } from "@/types";
 
-import { CreatePostProps } from "./CreatePost.type";
+import { PostFormProps } from "./PostForm.type";
 import { FormValues, postSchema } from "./validationSchema";
-import styles from "./CreatePost.module.scss";
+import styles from "./PostForm.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
+import { Form } from "./components";
 
 const values: FormValues = { title: "", text: "", image: null };
 
-const CreatePost: FC<CreatePostProps> = ({ user, ...props }) => {
+const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
   const [showPreview, setShowPreview] = useState(false);
-  setShowPreview;
+
   const methods = useForm<FormValues>({
     resolver: zodResolver(postSchema),
     values,
@@ -44,7 +45,11 @@ const CreatePost: FC<CreatePostProps> = ({ user, ...props }) => {
         </div>
         <div className={styles["body__content"]}>
           <FormProvider {...methods}>
-            {showPreview ? "<Preview/>" : "<Form/>"}
+            {showPreview ? (
+              "<Preview/>"
+            ) : (
+              <Form setShowPreview={setShowPreview} {...methods} />
+            )}
           </FormProvider>
         </div>
       </div>
@@ -52,4 +57,4 @@ const CreatePost: FC<CreatePostProps> = ({ user, ...props }) => {
   );
 };
 
-export default CreatePost;
+export default PostForm;

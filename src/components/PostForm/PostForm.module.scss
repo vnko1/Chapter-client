@@ -11,7 +11,7 @@
 }
 
 .body {
-  @apply relative w-full h-full px-2-md py-4-xs md:bg-[#fcfcfc] md:max-w-[768px] md:max-h-[550px] md:absolute md:top-1/2 md:-translate-y-1/2 left-1/2 md:-translate-x-1/2 md:rounded-md;
+  @apply relative w-full h-full px-2-md py-4-xs md:bg-[#fcfcfc] md:max-w-[768px] md:max-h-[550px] md:absolute md:top-1/2 md:-translate-y-1/2 left-1/2 md:-translate-x-1/2 md:rounded-md flex flex-col gap-5-xs;
 
   &__user {
     @apply flex items-center gap-1-xs;
