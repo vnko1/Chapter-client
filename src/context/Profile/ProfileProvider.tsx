@@ -13,6 +13,7 @@ import { ProfileProviderProps } from "./ProfileProvider.type";
 const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const postModal = useModal();
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 .loader {
   @apply fixed w-screen h-screen z-[999] top-0 left-0;
   background: rgba(28, 28, 28, 0.2);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(12px);
 }
 
 .spinner {

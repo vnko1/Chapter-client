@@ -1,0 +1,11 @@
+.field {
+  @apply text-center w-full;
+
+  &__input {
+    @apply hidden;
+  }
+
+  &__image {
+    @apply mx-auto;
+  }
+}

@@ -1,0 +1,55 @@
+.text-field {
+  @apply mb-4;
+
+  &--has-error .text-field__label-text {
+    @apply text-red;
+  }
+
+  &--has-error .text-field__input {
+    @apply border-red;
+  }
+
+  &__label {
+    @apply block;
+  }
+
+  &__label-text {
+    @apply text-grey-1000 text-xs text-left;
+  }
+
+  &__holder {
+    @apply relative;
+  }
+
+  &__input {
+    @apply block w-full resize-none min-h-min py-[10px] md:py-[18px] pl-[14px] pr-[20px] md:pl-[20px] md:pr-[40px] placeholder:text-grey-1000 text-xxs md:text-base base:text-[18px] rounded-lg border-grey-1000 border-[1px] outline-none  bg-inherit h-[50px] md:h-[132px] overflow-y-auto;
+
+    &::placeholder {
+      @apply text-grey-1000;
+    }
+  }
+
+  &__helper-box {
+    @apply flex flex-wrap items-center justify-between;
+  }
+
+  &__helper-link {
+    @apply ml-auto text-blue text-xs inline-block mt-1;
+  }
+
+  &__icon {
+    @apply absolute top-1/2 right-[12px] translate-y-[-50%] cursor-pointer;
+  }
+
+  &__error-message {
+    @apply text-red text-xxs mt-1 mr-2;
+  }
+
+  &__custom-error-message {
+    @apply text-red text-xxs mt-1 mr-2 w-full;
+  }
+
+  &__additional-label {
+    @apply mt-1 text-grey-1000 text-xxs text-left;
+  }
+}

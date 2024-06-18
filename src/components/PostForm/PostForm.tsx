@@ -40,6 +40,8 @@ const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
             src={user?.avatarUrl || default_avatar}
             alt="avatar"
             className={styles["avatar"]}
+            width={44}
+            height={44}
           />
           <p>{user?.nickName}</p>
         </div>
