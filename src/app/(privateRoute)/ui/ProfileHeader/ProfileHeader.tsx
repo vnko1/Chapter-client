@@ -4,20 +4,18 @@ import { FC } from "react";
 import { useNavigationToggler, useProfileContext } from "@/context";
 import { Logo, UIButton } from "@/components";
 
-import { Avatar, CreatePost, MenuToggler } from "@/app/ui";
+import { Avatar, MenuToggler } from "@/app/ui";
 
 import { SearchBar } from "..";
 
 import { ProfileHeaderProps } from "./ProfileHeader.type";
-import styles from "./ProfileHeader.module.scss";
 import TabIcon from "./IconsComponent/TabIcon";
 import Icon from "./IconsComponent/Icon";
-import { useModal } from "@/hooks";
+import styles from "./ProfileHeader.module.scss";
 
 const ProfileHeader: FC<ProfileHeaderProps> = () => {
-  const { user } = useProfileContext();
+  const { user, setActive } = useProfileContext();
   const { isActiveMenu, setIsActiveMenu } = useNavigationToggler();
-  const postModal = useModal();
 
   return (
     <header className={styles["profile-header"]}>
@@ -35,7 +33,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
             isCustomIcon
             classNames={styles["add-post-button"]}
             aria-label="Open create post modal button"
-            onClick={() => postModal.setActive(true)}
+            onClick={() => setActive(true)}
           >
             <TabIcon />
             Add post
@@ -51,13 +49,12 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
             isCustomIcon
             className="md:hidden bg-transparent"
             aria-label="Open create post modal button"
-            onClick={() => postModal.setActive(true)}
+            onClick={() => setActive(true)}
           >
             <Icon />
           </UIButton>
         </div>
       </div>
-      <CreatePost {...postModal} enableSwipe />
     </header>
   );
 };
