@@ -10,11 +10,11 @@ import { ProfileProviderProps } from "./ProfileProvider.type";
 
 const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
-  console.log("🚀 ~ user:", user);
 
   useEffect(() => {
     privateApi(EndpointsEnum.Profile)
       .then((res) => {
+        console.log("🚀 ~ .then ~ res:", res);
         setUser(res.data.data);
       })
       .catch(async () => {

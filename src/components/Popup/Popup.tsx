@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import cn from "classnames";
 
 import { PopupProps } from "./Popup.type";
@@ -14,6 +14,8 @@ const Popup: FC<PopupProps> = ({
   setVisible,
   close,
 }) => {
+  const nodeRef = useRef<null | HTMLDivElement>(null);
+
   useEffect(() => {
     active && setVisible(true);
   }, [active, setVisible]);
@@ -31,13 +33,32 @@ const Popup: FC<PopupProps> = ({
     };
   }, [close]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (
+        nodeRef.current &&
+        !nodeRef.current.contains(event.target as HTMLDivElement)
+      )
+        close();
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [close]);
+
   const popupClassNames = cn(styles["popup"], classNames, {
     [styles["active"]]: visible,
     [activeClassNames || ""]: visible,
   });
 
   if (!active) return null;
-  return <div className={popupClassNames}>{children}</div>;
+  return (
+    <div ref={nodeRef} className={popupClassNames}>
+      {children}
+    </div>
+  );
 };
 
 export default Popup;

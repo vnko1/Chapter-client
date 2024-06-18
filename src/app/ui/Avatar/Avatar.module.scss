@@ -1,5 +1,5 @@
 .user-avatar {
-  @apply rounded-[8px] overflow-hidden w-full cursor-pointer;
+  @apply rounded-[8px] overflow-hidden w-full cursor-pointer relative;
 
   &--small {
     @apply max-w-[52px];
@@ -12,4 +12,8 @@
   &__image {
     @apply w-full object-cover;
   }
+}
+
+.popup {
+  @apply bottom-0;
 }

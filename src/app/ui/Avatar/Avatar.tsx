@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import Image from "next/image";
 import cn from "classnames";
@@ -6,16 +7,14 @@ import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
+import { Popup } from "@/components";
+import { useModal } from "@/hooks";
 
-const Avatar: FC<AvatarProps> = ({
-  src,
-  alt,
-  size = "small",
-  classNames,
-  onClick,
-}) => {
+const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
+  const popup = useModal();
+  const { setActive } = popup;
   const onHandleClick = () => {
-    onClick && onClick();
+    setActive(true);
   };
 
   return (
@@ -38,6 +37,9 @@ const Avatar: FC<AvatarProps> = ({
         onClick={onHandleClick}
         id="avatar"
       />
+      <Popup {...popup} classNames={styles["popup"]}>
+        <div>POPUP</div>
+      </Popup>
     </div>
   );
 };
