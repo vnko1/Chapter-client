@@ -4,8 +4,8 @@ import { createPortal } from "react-dom";
 import cn from "classnames";
 
 import { useSwipe } from "@/hooks";
-import { ModalProps } from "@/types";
 
+import { ModalProps } from "./Modal.type";
 import styles from "./Modal.module.scss";
 
 const Modal: FC<ModalProps> = ({

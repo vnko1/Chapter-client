@@ -1,0 +1,7 @@
+.popup {
+  @apply absolute z-50 opacity-0 transition-all duration-300;
+
+  &.active {
+    @apply opacity-100;
+  }
+}

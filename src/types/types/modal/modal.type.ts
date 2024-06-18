@@ -1,15 +1,14 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-export type ModalProps = {
+export type ModalType = {
   setVisible: Dispatch<SetStateAction<boolean>>;
   close: () => void;
-  children: ReactNode;
   active: boolean;
   visible: boolean;
   classNames?: string;
   activeClassNames?: string;
   axis?: "clientX" | "clientY";
   touchDistinction?: number;
-  enableSwipeOnScreen?: number;
+  screenDimension?: number;
   enableSwipe?: boolean;
 };

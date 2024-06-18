@@ -12,7 +12,7 @@ export const useSwipe = ({
   enableSwipe = false,
   axis = "clientX",
   touchDistinction = 200,
-  enableSwipeOnScreen = 769,
+  screenDimension = 769,
 }: UseSwipeProps) => {
   const [touchStart, setTouchStart] = useState(0);
 
@@ -36,7 +36,7 @@ export const useSwipe = ({
       }
     };
 
-    if (enableSwipe && screenSize < enableSwipeOnScreen) {
+    if (enableSwipe && screenSize < screenDimension) {
       if (nodeRef) {
         element?.addEventListener("touchstart", handleTouchStart);
         element?.addEventListener("touchend", handleTouchEnd);
@@ -58,7 +58,7 @@ export const useSwipe = ({
   }, [
     axis,
     enableSwipe,
-    enableSwipeOnScreen,
+    screenDimension,
     nodeRef,
     screenSize,
     touchDistinction,
