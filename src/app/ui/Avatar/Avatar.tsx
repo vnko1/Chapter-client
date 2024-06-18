@@ -3,12 +3,16 @@ import { FC } from "react";
 import Image from "next/image";
 import cn from "classnames";
 
+import { logout } from "@/lib/session";
+import { Popup } from "@/components";
+import { useModal } from "@/hooks";
+
 import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
-import { Popup } from "@/components";
-import { useModal } from "@/hooks";
+import { privateApi } from "@/api";
+import { EndpointsEnum } from "@/types";
 
 const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
   const popup = useModal();
@@ -18,27 +22,38 @@ const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
   };
 
   return (
-    <div
-      className={cn(
-        styles["user-avatar"],
-        {
-          [styles["user-avatar--small"]]: size === "small",
-          [styles["user-avatar--large"]]: size === "large",
-        },
-        classNames
-      )}
-    >
-      <Image
-        src={src ? src : default_avatar}
-        alt={alt}
-        className={styles["user-avatar__image"]}
-        width={190}
-        height={190}
-        onClick={onHandleClick}
-        id="avatar"
-      />
+    <div className="relative">
+      <div
+        className={cn(
+          styles["user-avatar"],
+          {
+            [styles["user-avatar--small"]]: size === "small",
+            [styles["user-avatar--large"]]: size === "large",
+          },
+          classNames
+        )}
+      >
+        <Image
+          src={src ? src : default_avatar}
+          alt={alt}
+          className={styles["user-avatar__image"]}
+          width={190}
+          height={190}
+          onClick={onHandleClick}
+          id="avatar"
+        />
+      </div>
       <Popup {...popup} classNames={styles["popup"]}>
-        <div>POPUP</div>
+        <div className={styles["popup__content"]}>
+          <button onClick={async () => await logout()}>
+            Log out of profile
+          </button>
+          <button
+            onClick={async () => await privateApi.delete(EndpointsEnum.Profile)}
+          >
+            Delete user account
+          </button>
+        </div>
       </Popup>
     </div>
   );
