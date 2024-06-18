@@ -1,0 +1,43 @@
+import { z } from "zod";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/utils";
+
+export const postSchema = z
+  .object({
+    title: z
+      .string()
+      .min(2, "Must be at least 2 characters long.")
+      .max(
+        100,
+        "The length of characters should not exceed 100 characters long."
+      )
+      .optional(),
+    text: z
+      .string()
+      .min(2, "Must be at least 2 characters long.")
+      .max(
+        500,
+        "The length of characters should not exceed 500 characters long."
+      )
+      .optional(),
+    image: z
+      .any()
+      .refine((image) => {
+        return image.size <= MAX_FILE_SIZE;
+      }, `Max image size is 3MB.`)
+      .refine((image) => {
+        return ACCEPTED_IMAGE_TYPES.includes(image?.mimetype);
+      }, "Only .jpg, .jpeg, .png and .webp formats are supported.")
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      return (["title", "text", "image"] as (keyof typeof data)[]).some(
+        (key) => data[key] !== undefined
+      );
+    },
+    {
+      message: "At least one field must be provided.",
+      path: [],
+    }
+  );
+export type FormValues = z.infer<typeof postSchema>;

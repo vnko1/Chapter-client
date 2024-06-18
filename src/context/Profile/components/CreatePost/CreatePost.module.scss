@@ -16,6 +16,10 @@
   &__user {
     @apply flex items-center gap-1-xs;
   }
+
+  &__content {
+    @apply flex flex-col justify-center;
+  }
 }
 
 .cross-btn {

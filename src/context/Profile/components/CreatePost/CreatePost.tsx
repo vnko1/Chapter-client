@@ -1,15 +1,29 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 
 import { Icon, Modal } from "@/components";
 import { IconEnum } from "@/types";
 
 import { CreatePostProps } from "./CreatePost.type";
+import { FormValues, postSchema } from "./validationSchema";
 import styles from "./CreatePost.module.scss";
+
 import default_avatar from "@/assets/svg/default_avatar.svg";
 
+const values: FormValues = { title: "", text: "", image: null };
+
 const CreatePost: FC<CreatePostProps> = ({ user, ...props }) => {
+  const [showPreview, setShowPreview] = useState(false);
+  setShowPreview;
+  const methods = useForm<FormValues>({
+    resolver: zodResolver(postSchema),
+    values,
+    mode: "onChange",
+  });
+
   return (
     <Modal
       {...props}
@@ -27,6 +41,11 @@ const CreatePost: FC<CreatePostProps> = ({ user, ...props }) => {
             className={styles["avatar"]}
           />
           <p>{user?.nickName}</p>
+        </div>
+        <div className={styles["body__content"]}>
+          <FormProvider {...methods}>
+            {showPreview ? "<Preview/>" : "<Form/>"}
+          </FormProvider>
         </div>
       </div>
     </Modal>
