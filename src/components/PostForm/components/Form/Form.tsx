@@ -42,7 +42,11 @@ const Form: FC<FormProps> = (props) => {
         <Icon icon={IconEnum.Image} size={48} />
         <span>.png, .jpg, .gif</span>
       </button>
-      <ImageField name="image" inputRef={imageRef} />
+      <ImageField
+        name="image"
+        inputRef={imageRef}
+        previewClassNames="mb-2-xs"
+      />
       <TextAreaField
         id="text"
         name="text"
