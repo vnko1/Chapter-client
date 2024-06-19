@@ -45,6 +45,7 @@ const Preview: FC<PreviewProps> = ({
       }
     }
   };
+
   const editPost = async () => {
     try {
       await privateApi.patch(EndpointsEnum.Post + "/" + postId, values, {
