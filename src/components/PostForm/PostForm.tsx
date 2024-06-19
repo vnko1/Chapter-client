@@ -14,17 +14,22 @@ import styles from "./PostForm.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
 
-const values: FormValues = { title: "", text: "", image: null };
-
-const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
+const PostForm: FC<PostFormProps> = ({
+  user,
+  imageUrl,
+  text,
+  title,
+  ...props
+}) => {
   const [showPreview, setShowPreview] = useState(false);
 
   const methods = useForm<FormValues>({
     resolver: zodResolver(postSchema),
-    values,
+    values: { title: title || "", text: text || "", image: null },
     mode: "onChange",
   });
 
+  // const { getValues } = methods;
   return (
     <Modal
       {...props}
@@ -33,7 +38,7 @@ const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
     >
       <div className={styles["body"]}>
         <button className={styles["cross-btn"]} onClick={() => props.close()}>
-          <Icon icon={IconEnum.Cross} size={24} />
+          <Icon icon={IconEnum.Cross} size={32} />
         </button>
         <div className={styles["body__user"]}>
           <Image
@@ -50,7 +55,11 @@ const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
             {showPreview ? (
               "<Preview/>"
             ) : (
-              <Form setShowPreview={setShowPreview} {...methods} />
+              <Form
+                setShowPreview={setShowPreview}
+                previewUrl={imageUrl}
+                {...methods}
+              />
             )}
           </FormProvider>
         </div>

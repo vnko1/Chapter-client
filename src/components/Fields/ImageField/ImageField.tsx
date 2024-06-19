@@ -12,6 +12,7 @@ const ImageField: FC<ImageFieldProps> = ({
   name,
   id,
   inputRef,
+  previewUrl = null,
   alt = "",
   classNames,
   previewClassNames,
@@ -23,7 +24,7 @@ const ImageField: FC<ImageFieldProps> = ({
   const { register, setValue } = useFormContext();
   const { ref: registerRef, ...rest } = register(name);
 
-  const [preview, setPreview] = useState<null | string>(null);
+  const [preview, setPreview] = useState<null | string>(previewUrl);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;

@@ -15,7 +15,7 @@ import { IconEnum } from "@/types";
 
 const Form: FC<FormProps> = (props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const { handleSubmit, setShowPreview } = props;
+  const { handleSubmit, setShowPreview, previewUrl } = props;
 
   const onSubmit = () => {
     setShowPreview(true);
@@ -45,6 +45,7 @@ const Form: FC<FormProps> = (props) => {
         name="image"
         inputRef={imageRef}
         previewClassNames="mb-2-xs"
+        previewUrl={previewUrl}
       />
       <TextAreaField
         id="text"
