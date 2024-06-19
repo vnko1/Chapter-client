@@ -24,7 +24,7 @@ const Form: FC<FormProps> = (props) => {
         classNames={styles["form__title"]}
         aria-label="Title input field"
       />
-      <ImageField name="image" width={620} height={280} inputRef={imageRef} />
+      <ImageField name="image" inputRef={imageRef} />
       <button
         type="button"
         onClick={() => {

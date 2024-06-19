@@ -1,35 +1,41 @@
 "use client";
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 
 import { ImageFieldProps } from "./ImageField.type";
 import styles from "./ImageField.module.scss";
+import Icon from "@/components/Icon/Icon";
+import { IconEnum } from "@/types";
 
 const ImageField: FC<ImageFieldProps> = ({
   name,
   inputRef,
-  width,
-  height,
   alt = "",
   classNames,
   previewClassNames,
   placeholder,
   disabled,
-  sizes,
+  sizes = "",
+  objectFit = "cover",
 }) => {
-  const { register, setValue, watch } = useFormContext();
-
-  const preview = watch(name);
-
+  const { register, setValue } = useFormContext();
   const { ref: registerRef, ...rest } = register(name);
+
+  const [preview, setPreview] = useState<null | string>(null);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;
     const file = event.target.files[0];
+    setValue(name, file);
     const urlImage = URL.createObjectURL(file);
-    setValue(name, urlImage);
+    setPreview(urlImage);
     event.target.value = "";
+  };
+
+  const handleCrossClick = () => {
+    setValue(name, null);
+    setPreview(null);
   };
 
   return (
@@ -47,15 +53,22 @@ const ImageField: FC<ImageFieldProps> = ({
         aria-label="Image upload field"
         disabled={disabled}
       />
-      <Image
-        className={`${styles["field__image"]} ${previewClassNames}`}
-        width={width}
-        height={height}
-        alt={alt}
-        src={preview || ""}
-        placeholder={placeholder}
-        sizes={sizes}
-      />
+      {preview && (
+        <div className={`${styles["field__image"]} ${previewClassNames}`}>
+          <button onClick={handleCrossClick}>
+            <Icon size={24} icon={IconEnum.Cross} />
+          </button>
+          <Image
+            objectFit={objectFit}
+            alt={alt}
+            src={preview}
+            placeholder={placeholder}
+            sizes={sizes}
+            fill
+            objectPosition="center"
+          />
+        </div>
+      )}
     </div>
   );
 };
