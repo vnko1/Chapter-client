@@ -31,7 +31,7 @@ const Form: FC<FormProps> = (props) => {
         classNames={styles["form__title"]}
         aria-label="Title input field"
       />
-      <ImageField name="image" inputRef={imageRef} />
+
       <button
         className={styles["form__image-btn"]}
         type="button"
@@ -42,6 +42,7 @@ const Form: FC<FormProps> = (props) => {
         <Icon icon={IconEnum.Image} size={48} />
         <span>.png, .jpg, .gif</span>
       </button>
+      <ImageField name="image" inputRef={imageRef} />
       <TextAreaField
         id="text"
         name="text"
