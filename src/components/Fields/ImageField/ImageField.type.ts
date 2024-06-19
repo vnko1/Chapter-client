@@ -11,4 +11,5 @@ export type ImageFieldProps = {
   placeholder?: PlaceholderValue;
   sizes?: string;
   objectFit?: string;
+  id: string;
 };

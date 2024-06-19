@@ -1,8 +1,6 @@
 "use client";
 import React, { FC, useRef } from "react";
-import { SubmitHandler } from "react-hook-form";
 
-import { FormValues } from "../../validationSchema";
 import { FormProps } from "./Form.type";
 import styles from "./Form.module.scss";
 
@@ -17,10 +15,10 @@ import { IconEnum } from "@/types";
 
 const Form: FC<FormProps> = (props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const { handleSubmit } = props;
+  const { handleSubmit, setShowPreview } = props;
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const onSubmit = () => {
+    setShowPreview(true);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles["form"]}>
@@ -43,6 +41,7 @@ const Form: FC<FormProps> = (props) => {
         <span>.png, .jpg, .gif</span>
       </button>
       <ImageField
+        id="image"
         name="image"
         inputRef={imageRef}
         previewClassNames="mb-2-xs"

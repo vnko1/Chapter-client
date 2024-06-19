@@ -10,6 +10,7 @@ import { IconEnum } from "@/types";
 
 const ImageField: FC<ImageFieldProps> = ({
   name,
+  id,
   inputRef,
   alt = "",
   classNames,
@@ -42,6 +43,7 @@ const ImageField: FC<ImageFieldProps> = ({
     <div className={`${styles["field"]} ${classNames}`}>
       <input
         type="file"
+        id={id}
         {...rest}
         ref={(el) => {
           registerRef(el);

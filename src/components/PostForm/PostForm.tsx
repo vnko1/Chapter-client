@@ -24,10 +24,6 @@ const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
     values,
     mode: "onChange",
   });
-  const {
-    formState: { errors },
-  } = methods;
-  console.log("🚀 ~ errors:", errors);
 
   return (
     <Modal
