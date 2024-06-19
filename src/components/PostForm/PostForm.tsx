@@ -13,12 +13,14 @@ import { FormValues, postSchema } from "./validationSchema";
 import styles from "./PostForm.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
+import Preview from "./components/Preview/Preview";
 
 const PostForm: FC<PostFormProps> = ({
   user,
   imageUrl,
   text,
   title,
+  postId,
   ...props
 }) => {
   const [showPreview, setShowPreview] = useState(false);
@@ -29,7 +31,8 @@ const PostForm: FC<PostFormProps> = ({
     mode: "onChange",
   });
 
-  // const { getValues } = methods;
+  const { getValues } = methods;
+  console.log("🚀 ~ getValues:", getValues());
   return (
     <Modal
       {...props}
@@ -53,7 +56,11 @@ const PostForm: FC<PostFormProps> = ({
         <div className={styles["body__content"]}>
           <FormProvider {...methods}>
             {showPreview ? (
-              "<Preview/>"
+              <Preview
+                values={getValues()}
+                setShowPreview={setShowPreview}
+                postId={postId}
+              />
             ) : (
               <Form
                 setShowPreview={setShowPreview}

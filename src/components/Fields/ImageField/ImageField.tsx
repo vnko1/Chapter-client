@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 
@@ -21,10 +21,16 @@ const ImageField: FC<ImageFieldProps> = ({
   sizes = "",
   objectFit = "cover",
 }) => {
-  const { register, setValue } = useFormContext();
+  const { register, setValue, getValues } = useFormContext();
+
   const { ref: registerRef, ...rest } = register(name);
 
   const [preview, setPreview] = useState<null | string>(previewUrl);
+
+  useEffect(() => {
+    const value = getValues(name);
+    if (value) setPreview(URL.createObjectURL(value));
+  }, [getValues, name]);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;

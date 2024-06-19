@@ -32,7 +32,10 @@ export const postSchema = z
   .refine(
     (data) => {
       return (["title", "text", "image"] as (keyof typeof data)[]).some(
-        (key) => data[key] !== undefined
+        (key) => {
+          console.log(data[key]);
+          data[key] !== undefined && data["image"] !== null;
+        }
       );
     },
     {

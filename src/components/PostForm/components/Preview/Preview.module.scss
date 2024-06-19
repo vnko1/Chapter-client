@@ -1,0 +1,20 @@
+.preview {
+  &__image {
+    @apply mb-2-md relative mx-auto h-[280px];
+  }
+
+  &__title {
+    @apply mb-1-md;
+  }
+
+  &__text {
+  }
+
+  &__buttons {
+    @apply mt-5-xs flex gap-2-xs md:gap-4-xs;
+  }
+}
+
+.error {
+  @apply text-red text-xxs text-center mt-2;
+}
