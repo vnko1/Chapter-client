@@ -7,6 +7,8 @@ import { UIButton } from "@/components";
 import { PreviewProps } from "./Preview.type";
 import styles from "./Preview.module.scss";
 import { isAxiosError } from "axios";
+import { privateApi } from "@/api";
+import { EndpointsEnum } from "@/types";
 
 const Preview: FC<PreviewProps> = ({
   values,
@@ -33,7 +35,7 @@ const Preview: FC<PreviewProps> = ({
 
   const publishPost = async () => {
     try {
-      console.log(values);
+      await privateApi.post(EndpointsEnum.Add_post, values);
       resetFields();
     } catch (error) {
       if (isAxiosError(error)) {

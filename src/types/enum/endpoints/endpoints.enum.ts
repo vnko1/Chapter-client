@@ -11,4 +11,5 @@ export enum EndpointsEnum {
   Confirm_restore_acc = "/auth/restore/confirm",
   Refresh_Token = "/auth/refresh",
   Profile = "/users",
+  Add_post = "/posts/post",
 }
