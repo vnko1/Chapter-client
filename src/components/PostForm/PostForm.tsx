@@ -31,7 +31,7 @@ const PostForm: FC<PostFormProps> = ({
     mode: "onChange",
   });
 
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
 
   return (
     <Modal
@@ -57,6 +57,8 @@ const PostForm: FC<PostFormProps> = ({
           <FormProvider {...methods}>
             {showPreview ? (
               <Preview
+                close={props.close}
+                reset={reset}
                 values={getValues()}
                 setShowPreview={setShowPreview}
                 postId={postId}

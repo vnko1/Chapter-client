@@ -6,15 +6,58 @@ import { UIButton } from "@/components";
 
 import { PreviewProps } from "./Preview.type";
 import styles from "./Preview.module.scss";
+import { isAxiosError } from "axios";
 
-const Preview: FC<PreviewProps> = ({ values, setShowPreview }) => {
+const Preview: FC<PreviewProps> = ({
+  values,
+  postId,
+  setShowPreview,
+  close,
+  reset,
+}) => {
   const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (values.image) {
       setPreview(URL.createObjectURL(values.image));
     }
   }, [values.image]);
+
+  const resetFields = () => {
+    setPreview(null);
+    reset();
+    close();
+    setTimeout(() => setShowPreview(false), 200);
+  };
+
+  const publishPost = async () => {
+    try {
+      console.log(values);
+      resetFields();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log("🚀 ~ editPost ~ error:", error);
+        setError(error.message);
+      }
+    }
+  };
+  const editPost = async () => {
+    try {
+      console.log(values);
+      resetFields();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log("🚀 ~ editPost ~ error:", error);
+        setError(error.message);
+      }
+    }
+  };
+
+  const submitChanges = async () => {
+    if (postId) return await editPost();
+    return await publishPost();
+  };
 
   return (
     <div className={styles["preview"]}>
@@ -30,7 +73,7 @@ const Preview: FC<PreviewProps> = ({ values, setShowPreview }) => {
         </div>
       )}
       <div className={styles["preview__title"]}>
-        <p>{values.title}</p>
+        <h4>{values.title}</h4>
       </div>
       <div className={styles["preview__text"]}>
         <p>{values.text}</p>
@@ -47,15 +90,14 @@ const Preview: FC<PreviewProps> = ({ values, setShowPreview }) => {
         <UIButton
           //   disabled={isLoading}
           //   isLoading={isLoading}
-          //   onClick={onHandlePublishClick}
-
+          onClick={submitChanges}
           aria-label="Publish post button"
           fullWidth
         >
           Publish
         </UIButton>
       </div>
-      {/* {error ? <p className={styles["error"]}>{error}</p> : null} */}
+      {error && <p className={styles["error"]}>{error}</p>}
     </div>
   );
 };
