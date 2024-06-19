@@ -1,4 +1,5 @@
 .form {
+  @apply flex flex-col;
   &__title {
     @apply mb-2-xs;
   }
@@ -7,6 +8,14 @@
 
     & > button {
       @apply absolute top-1 right-1 bg-transparent;
+    }
+  }
+
+  &__image-btn {
+    @apply text-primary mb-2-xs bg-transparent text-start flex flex-col;
+
+    & > span {
+      @apply text-grey-1000 text-xs;
     }
   }
 

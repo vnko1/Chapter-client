@@ -6,7 +6,14 @@ import { FormValues } from "../../validationSchema";
 import { FormProps } from "./Form.type";
 import styles from "./Form.module.scss";
 
-import { UIButton, TextAreaField, TextField, ImageField } from "@/components";
+import {
+  UIButton,
+  TextAreaField,
+  TextField,
+  ImageField,
+  Icon,
+} from "@/components";
+import { IconEnum } from "@/types";
 
 const Form: FC<FormProps> = (props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
@@ -26,12 +33,14 @@ const Form: FC<FormProps> = (props) => {
       />
       <ImageField name="image" inputRef={imageRef} />
       <button
+        className={styles["form__image-btn"]}
         type="button"
         onClick={() => {
           imageRef.current?.click();
         }}
       >
-        Add
+        <Icon icon={IconEnum.Image} size={48} />
+        <span>.png, .jpg, .gif</span>
       </button>
       <TextAreaField
         id="text"

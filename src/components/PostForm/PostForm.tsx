@@ -7,12 +7,12 @@ import Image from "next/image";
 import { Icon, Modal } from "@/components";
 import { IconEnum } from "@/types";
 
+import { Form } from "./components";
 import { PostFormProps } from "./PostForm.type";
 import { FormValues, postSchema } from "./validationSchema";
 import styles from "./PostForm.module.scss";
 
 import default_avatar from "@/assets/svg/default_avatar.svg";
-import { Form } from "./components";
 
 const values: FormValues = { title: "", text: "", image: null };
 
@@ -24,6 +24,10 @@ const PostForm: FC<PostFormProps> = ({ user, ...props }) => {
     values,
     mode: "onChange",
   });
+  const {
+    formState: { errors },
+  } = methods;
+  console.log("🚀 ~ errors:", errors);
 
   return (
     <Modal
