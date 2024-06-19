@@ -31,13 +31,14 @@ export const postSchema = z
   })
   .refine(
     (data) => {
-      return (["title", "text", "image"] as (keyof typeof data)[]).some(
-        (key) => {
-          console.log(data[key]);
-          data[key] !== undefined && data["image"] !== null;
-        }
+      const { title, text, image } = data;
+      return (
+        (title && title.trim() !== "") ||
+        (text && text.trim() !== "") ||
+        image !== null
       );
     },
+
     {
       message: "At least one field must be provided.",
       path: [],

@@ -32,7 +32,7 @@ const PostForm: FC<PostFormProps> = ({
   });
 
   const { getValues } = methods;
-  console.log("🚀 ~ getValues:", getValues());
+
   return (
     <Modal
       {...props}
