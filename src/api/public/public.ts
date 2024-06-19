@@ -1,9 +1,4 @@
 import { CustomError } from "@/services";
-import axios from "axios";
-
-export const axiosPublicApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-});
 
 export async function publicApi(endpoint: string, reqInit?: RequestInit) {
   const reqOpt = {

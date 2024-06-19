@@ -1,0 +1,31 @@
+.user-avatar {
+  @apply rounded-[8px] overflow-hidden  w-full cursor-pointer;
+
+  &--small {
+    @apply max-w-[52px];
+  }
+
+  &--large {
+    @apply max-w-[190px];
+  }
+
+  &__image {
+    @apply w-full object-cover;
+  }
+}
+
+.popup {
+  @apply w-[282px] bg-[#FAFAFA] border border-grey-1010 px-1-md py-1-xl rounded-lg -bottom-[130%] -right-full;
+  box-shadow: 0px 4px 20px 0px rgba(124, 124, 124, 0.52);
+
+  &__content {
+    @apply flex flex-col gap-2-md;
+    & > button {
+      @apply bg-transparent text-start;
+
+      &:hover {
+        @apply text-primaryHover;
+      }
+    }
+  }
+}

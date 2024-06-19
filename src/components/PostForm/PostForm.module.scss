@@ -1,0 +1,31 @@
+.modal {
+  @apply w-screen h-screen top-0 left-0 bg-[#fcfcfc] -translate-x-full md:translate-x-0 md:scale-0;
+  @media screen and (min-width: 768px) {
+    background: rgba(28, 28, 28, 0.2);
+    backdrop-filter: blur(3px);
+  }
+}
+
+.active {
+  @apply translate-x-0 md:scale-100;
+}
+
+.body {
+  @apply relative w-full px-2-md py-4-xs md:bg-[#fcfcfc] md:max-w-[768px] md:min-h-[550px] md:absolute md:top-1/2 md:-translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:rounded-md flex flex-col justify-around;
+
+  &__user {
+    @apply flex items-center gap-1-xs mb-4-xs;
+  }
+
+  &__content {
+    @apply flex flex-col justify-center;
+  }
+}
+
+.cross-btn {
+  @apply absolute top-4-xs right-2-md bg-transparent text-primary;
+}
+
+.avatar {
+  @apply rounded-[50px] overflow-hidden w-[44px] h-[44px];
+}

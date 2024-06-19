@@ -1,0 +1,37 @@
+.form {
+  @apply flex flex-col;
+  &__title {
+    @apply mb-2-xs;
+  }
+  &__image {
+    @apply rounded-lg overflow-hidden mt-2-xs relative flex justify-center;
+
+    & > button {
+      @apply absolute top-1 right-1 bg-transparent;
+    }
+  }
+
+  &__image-btn {
+    @apply text-primary mb-2-xs bg-transparent text-start flex flex-col;
+
+    & > span {
+      @apply text-grey-1000 text-xs;
+    }
+  }
+
+  &__comment {
+    @apply my-2-xs;
+
+    & > textarea {
+      @apply text-[18px] border-grey-1000 h-[132px] base:text-sm;
+    }
+  }
+
+  &__button {
+    @apply w-full md:max-w-[316px] mx-auto;
+  }
+}
+
+.image__label {
+  @apply text-xs text-grey-1000;
+}

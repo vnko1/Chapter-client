@@ -1,0 +1,15 @@
+.field {
+  @apply text-center w-full;
+
+  &__input {
+    @apply hidden;
+  }
+
+  &__image {
+    @apply relative mx-auto h-[280px] rounded-lg overflow-hidden;
+
+    & > button {
+      @apply absolute right-0 top-0 z-[999] bg-transparent text-orange;
+    }
+  }
+}

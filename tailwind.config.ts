@@ -28,6 +28,7 @@ const config: Config = {
       boxShadow: {
         bottom: "0px 1px 11px 0px rgba(0, 0, 0, 0.1)",
       },
+
       spacing: {
         "0-sm": "4px",
         "0-md": "8px",
