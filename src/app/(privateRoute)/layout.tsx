@@ -11,7 +11,7 @@ function PrivateLayout({ children }: { children: ReactNode }) {
           <SidebarNavigation />
           <ProfileHeader />
         </NavigationTogglerProvider>
-        <main>{children}</main>
+        <main className={styles["private"]}>{children}</main>
       </div>
     </ProfileProvider>
   );
