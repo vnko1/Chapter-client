@@ -1,14 +1,14 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
+import { isAxiosError } from "axios";
 
 import { UIButton } from "@/components";
+import { EndpointsEnum } from "@/types";
+import { privateApi } from "@/api";
 
 import { PreviewProps } from "./Preview.type";
 import styles from "./Preview.module.scss";
-import { isAxiosError } from "axios";
-import { privateApi } from "@/api";
-import { EndpointsEnum } from "@/types";
 
 const Preview: FC<PreviewProps> = ({
   values,
@@ -35,23 +35,25 @@ const Preview: FC<PreviewProps> = ({
 
   const publishPost = async () => {
     try {
-      await privateApi.post(EndpointsEnum.Add_post, values);
+      await privateApi.post(EndpointsEnum.Post, values, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       resetFields();
     } catch (error) {
       if (isAxiosError(error)) {
-        console.log("🚀 ~ editPost ~ error:", error);
-        setError(error.message);
+        setError(error.response?.data.errorMessage);
       }
     }
   };
   const editPost = async () => {
     try {
-      console.log(values);
+      await privateApi.patch(EndpointsEnum.Post + "/" + postId, values, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       resetFields();
     } catch (error) {
       if (isAxiosError(error)) {
-        console.log("🚀 ~ editPost ~ error:", error);
-        setError(error.message);
+        setError(error.response?.data.errorMessage);
       }
     }
   };

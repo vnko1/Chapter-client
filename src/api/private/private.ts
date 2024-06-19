@@ -11,6 +11,7 @@ export const privateApi = axios.create({
 
   headers: {
     "X-Requested-With": "XMLHttpRequest",
+    "Content-Type": "application/x-www-form-urlencoded",
   },
 });
 

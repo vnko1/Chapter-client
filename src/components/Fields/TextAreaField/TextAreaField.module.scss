@@ -22,7 +22,7 @@
   }
 
   &__input {
-    @apply block w-full resize-none min-h-min py-[10px] md:py-[18px] pl-[14px] pr-[20px] md:pl-[20px] md:pr-[40px] placeholder:text-grey-1000 text-xxs md:text-base base:text-[18px] rounded-lg border-grey-1000 border-[1px] outline-none  bg-inherit h-[50px] md:h-[132px] overflow-y-auto;
+    @apply text-black block w-full resize-none min-h-min py-[10px] md:py-[18px] pl-[14px] pr-[20px] md:pl-[20px] md:pr-[40px] placeholder:text-grey-1000 text-xs base:text-sm  md:text-base rounded-lg border-grey-1000 border-[1px] outline-none  bg-inherit h-[50px] md:h-[132px] overflow-y-auto;
 
     &::placeholder {
       @apply text-grey-1000;
