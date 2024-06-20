@@ -33,7 +33,7 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
 
   useEffect(() => {
     if (access_token && refresh_token) {
-      login(access_token, refresh_token);
+      login(access_token, refresh_token, LinksEnum.HOME);
       router.replace(pathname);
     }
   }, [access_token, pathname, refresh_token, router]);
@@ -44,7 +44,11 @@ const LoginForm: FC<LoginFormProps> = ({ access_token, refresh_token }) => {
 
       if (res?.isError) throw new CustomError(res.error);
 
-      await login(res.data.access_token, res.data.refresh_token);
+      await login(
+        res.data.access_token,
+        res.data.refresh_token,
+        LinksEnum.HOME
+      );
     } catch (error) {
       if (error instanceof CustomError) {
         const [, serviceMessage] = error.errorMessage.split("; ");

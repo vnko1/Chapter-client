@@ -32,7 +32,11 @@ export async function logout() {
   redirect(LinksEnum.HOME);
 }
 
-export async function login(access_token: string, refresh_token: string) {
+export async function login(
+  access_token: string,
+  refresh_token: string,
+  redirectUrl?: string
+) {
   const session = await getSession();
 
   session.access_token = access_token;
@@ -46,7 +50,7 @@ export async function login(access_token: string, refresh_token: string) {
   //   maxAge: +rTokenLife,
   // });
   revalidatePath(LinksEnum.HOME);
-  redirect(LinksEnum.HOME);
+  redirectUrl && redirect(redirectUrl);
 }
 
 export async function getParsedSession() {
