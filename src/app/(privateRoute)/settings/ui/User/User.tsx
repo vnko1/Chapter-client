@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useProfileContext } from "@/context";
 import { ImageField, UIButton } from "@/components";
 import { default_avatar } from "@/utils";
-import { EndpointsEnum, IconEnum, IUser } from "@/types";
+import { EndpointsEnum, IconEnum } from "@/types";
 import { privateApi } from "@/api";
 
 import styles from "./User.module.scss";
