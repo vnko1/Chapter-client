@@ -40,9 +40,9 @@ const User: FC = () => {
   }, [image, setUser]);
 
   return (
-    <FormProvider {...methods}>
-      <div className={styles["user"]}>
-        <div className={styles["user__preview"]}>
+    <div className={styles["user"]}>
+      <div className={styles["user__preview"]}>
+        <FormProvider {...methods}>
           <ImageField
             name="image"
             id="image"
@@ -51,8 +51,10 @@ const User: FC = () => {
             previewClassNames={styles["preview"]}
             sizes="120"
           />
-        </div>
+        </FormProvider>
         <p className={styles["user__email"]}>{user?.email}</p>
+      </div>
+      <div className={styles["user__status"]}>
         <UIButton
           alignIcon="left"
           icon={IconEnum.Camera}
@@ -65,7 +67,7 @@ const User: FC = () => {
           Upload new photo
         </UIButton>
       </div>
-    </FormProvider>
+    </div>
   );
 };
 

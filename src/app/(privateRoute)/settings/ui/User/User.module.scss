@@ -1,10 +1,13 @@
 .user {
   &__preview {
-    @apply mb-1-xs;
+    @apply mb-1-xs flex flex-col gap-1-xs items-center;
   }
 
   &__email {
-    @apply text-center mx-auto mb-1-xs;
+    // @apply text-center mx-auto;
+  }
+
+  &__ststus {
   }
 }
 
