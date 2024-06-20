@@ -34,7 +34,7 @@ privateApi.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const { access_token } = await getParsedSession();
+    const { access_token, refresh_token } = await getParsedSession();
 
     if (!access_token) {
       return Promise.reject(error);
@@ -51,7 +51,7 @@ privateApi.interceptors.response.use(
       try {
         const res: AxiosResponse = await axios.post(
           BASE_URL + EndpointsEnum.Refresh_Token,
-          null,
+          { refresh_token },
           {
             withCredentials: true,
           }
