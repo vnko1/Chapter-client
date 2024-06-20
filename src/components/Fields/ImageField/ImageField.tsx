@@ -19,20 +19,19 @@ const ImageField: FC<ImageFieldProps> = ({
   placeholder,
   disabled,
   sizes = "",
-  objectFit = "cover",
   showCrossButton = false,
 }) => {
   const { register, setValue, getValues } = useFormContext();
+
+  const value = getValues(name);
 
   const { ref: registerRef, ...rest } = register(name);
 
   const [preview, setPreview] = useState<null | string>(previewUrl);
 
   useEffect(() => {
-    const value = getValues(name);
-
     if (value) setPreview(URL.createObjectURL(value));
-  }, [getValues, name]);
+  }, [value]);
 
   useEffect(() => {
     if (previewUrl) setPreview(previewUrl);
@@ -76,13 +75,11 @@ const ImageField: FC<ImageFieldProps> = ({
             </button>
           )}
           <Image
-            objectFit={objectFit}
             alt={alt}
             src={preview}
             placeholder={placeholder}
             sizes={sizes}
             fill
-            objectPosition="center"
           />
         </div>
       )}
