@@ -3,5 +3,5 @@
 }
 
 .container {
-  @apply w-full mx-auto px-2-md md:px-4-xl laptop_md:max-w-[960px];
+  @apply w-full mx-auto px-2-md md:px-4-xl base:max-w-[960px] base:bg-white base:rounded-t-lg base:border base:border-grey-1010;
 }
