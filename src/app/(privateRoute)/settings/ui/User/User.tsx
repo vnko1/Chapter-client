@@ -23,7 +23,6 @@ const User: FC = () => {
 
   useEffect(() => {
     if (image) {
-      const avatarUrl = URL.createObjectURL(image);
       setIsLoading(true);
       privateApi
         .patch(
@@ -31,8 +30,8 @@ const User: FC = () => {
           { image },
           { headers: { "Content-Type": "multipart/form-data" } }
         )
-        .then(() => {
-          setUser((user) => ({ ...(user as IUser), avatarUrl }));
+        .then((res) => {
+          setUser(res.data.data);
         })
         .finally(() => {
           setIsLoading(false);
