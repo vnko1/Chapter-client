@@ -47,11 +47,3 @@
 .link {
   @apply rounded-md px-4-xs py-1-sm bg-[#F79400];
 }
-
-.section {
-  @apply pt-2-xs;
-}
-
-.container {
-  @apply w-full mx-auto px-2-md md:px-4-xl laptop_md:max-w-[960px];
-}

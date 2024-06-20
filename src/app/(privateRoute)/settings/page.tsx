@@ -1,9 +1,10 @@
 import React from "react";
+import styles from "./settings.module.scss";
 
 function SettingsPage() {
   return (
-    <section className="section">
-      <div className="container">SETS</div>
+    <section className={styles["section"]}>
+      <div className={styles["container"]}>SETS</div>
     </section>
   );
 }
