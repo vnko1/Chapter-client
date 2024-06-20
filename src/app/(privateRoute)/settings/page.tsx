@@ -1,7 +1,11 @@
 import React from "react";
 
 function SettingsPage() {
-  return <div>SettingsPage</div>;
+  return (
+    <section>
+      <div></div>
+    </section>
+  );
 }
 
 export default SettingsPage;
