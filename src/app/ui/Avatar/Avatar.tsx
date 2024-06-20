@@ -6,13 +6,12 @@ import cn from "classnames";
 import { logout } from "@/lib/session";
 import { Popup } from "@/components";
 import { useModal } from "@/hooks";
+import { privateApi } from "@/api";
+import { EndpointsEnum } from "@/types";
+import { default_avatar } from "@/utils";
 
 import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
-
-import default_avatar from "@/assets/svg/default_avatar.svg";
-import { privateApi } from "@/api";
-import { EndpointsEnum } from "@/types";
 
 const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
   const popup = useModal();

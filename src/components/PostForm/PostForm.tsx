@@ -5,15 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 
 import { Icon, Modal } from "@/components";
+import { default_avatar } from "@/utils";
 import { IconEnum } from "@/types";
 
-import { Form } from "./components";
+import { Form, Preview } from "./components";
 import { PostFormProps } from "./PostForm.type";
 import { FormValues, postSchema } from "./validationSchema";
 import styles from "./PostForm.module.scss";
-
-import default_avatar from "@/assets/svg/default_avatar.svg";
-import Preview from "./components/Preview/Preview";
 
 const PostForm: FC<PostFormProps> = ({
   user,

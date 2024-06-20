@@ -12,7 +12,9 @@ const Loader: FC<LoaderProps> = ({ active }) => {
   }, []);
   const loader = (
     <div className={styles["loader"]}>
-      <div className={styles["spinner"]}></div>
+      <div className={styles["wrapper"]}>
+        <div className={styles["spinner"]}></div>
+      </div>
     </div>
   );
 

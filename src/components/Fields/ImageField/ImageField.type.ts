@@ -13,4 +13,5 @@ export type ImageFieldProps = {
   sizes?: string;
   objectFit?: string;
   id: string;
+  showCrossButton?: boolean;
 };

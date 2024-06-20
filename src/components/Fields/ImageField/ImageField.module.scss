@@ -6,10 +6,10 @@
   }
 
   &__image {
-    @apply relative mx-auto h-[280px] rounded-lg overflow-hidden;
+    @apply relative mx-auto overflow-hidden;
 
     & > button {
-      @apply absolute right-0 top-0 z-[999] bg-transparent text-orange;
+      @apply absolute right-0 top-0 z-[999] bg-transparent text-primary;
     }
   }
 }

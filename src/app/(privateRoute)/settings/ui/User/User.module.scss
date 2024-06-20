@@ -1,0 +1,13 @@
+.user {
+  &__preview {
+    @apply mb-1-xs;
+  }
+
+  &__email {
+    @apply text-center mx-auto;
+  }
+}
+
+.preview {
+  @apply w-[120px] h-[120px] rounded-lg;
+}

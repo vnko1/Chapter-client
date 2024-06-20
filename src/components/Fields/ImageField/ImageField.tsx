@@ -20,6 +20,7 @@ const ImageField: FC<ImageFieldProps> = ({
   disabled,
   sizes = "",
   objectFit = "cover",
+  showCrossButton = false,
 }) => {
   const { register, setValue, getValues } = useFormContext();
 
@@ -29,8 +30,13 @@ const ImageField: FC<ImageFieldProps> = ({
 
   useEffect(() => {
     const value = getValues(name);
+
     if (value) setPreview(URL.createObjectURL(value));
   }, [getValues, name]);
+
+  useEffect(() => {
+    if (previewUrl) setPreview(previewUrl);
+  }, [previewUrl]);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;
@@ -64,9 +70,11 @@ const ImageField: FC<ImageFieldProps> = ({
       />
       {preview && (
         <div className={`${styles["field__image"]} ${previewClassNames}`}>
-          <button onClick={handleCrossClick}>
-            <Icon size={24} icon={IconEnum.Cross} />
-          </button>
+          {showCrossButton && (
+            <button onClick={handleCrossClick}>
+              <Icon size={24} icon={IconEnum.Cross} />
+            </button>
+          )}
           <Image
             objectFit={objectFit}
             alt={alt}

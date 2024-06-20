@@ -4,8 +4,11 @@
   backdrop-filter: blur(12px);
 }
 
+.wrapper {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
 .spinner {
-  @apply absolute top-1/2 left-1/2;
   width: 56px;
   height: 56px;
   display: grid;
