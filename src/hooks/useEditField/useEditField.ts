@@ -5,6 +5,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 import { simpleStringRegex } from "@/utils";
 import { EditFieldType } from "./useEditField.type";
+import { privateApi } from "@/api";
+import { EndpointsEnum } from "@/types";
 
 const useEditField = ({
   fieldType,
@@ -35,6 +37,10 @@ const useEditField = ({
       if (fieldType === "status") {
         if (value.length > stringLength) return setError("Too long");
         console.log(value);
+        const res = await privateApi.patch(EndpointsEnum.Profile, {
+          status: value,
+        });
+        console.log("🚀 ~ onHandleSave ~ res:", res);
         //   const res = await profile.userSave({
         //     userStatus: value || " ",
         //   });

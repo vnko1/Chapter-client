@@ -1,7 +1,6 @@
 "use client";
 import { FC } from "react";
 import Image from "next/image";
-import cn from "classnames";
 
 import { logout } from "@/lib/session";
 import { Popup } from "@/components";
@@ -13,7 +12,7 @@ import { default_avatar } from "@/utils";
 import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
 
-const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
+const Avatar: FC<AvatarProps> = ({ src, alt, classNames }) => {
   const popup = useModal();
   const { setActive } = popup;
   const onHandleClick = () => {
@@ -22,24 +21,15 @@ const Avatar: FC<AvatarProps> = ({ src, alt, size = "small", classNames }) => {
 
   return (
     <div className="relative">
-      <div
-        className={cn(
-          styles["user-avatar"],
-          {
-            [styles["user-avatar--small"]]: size === "small",
-            [styles["user-avatar--large"]]: size === "large",
-          },
-          classNames
-        )}
-      >
+      <div className={`${styles["avatar"]} ${classNames}`}>
         <Image
           src={src ? src : default_avatar}
           alt={alt}
-          className={styles["user-avatar__image"]}
-          width={190}
-          height={190}
+          className={styles["avatar__image"]}
+          fill
           onClick={onHandleClick}
           id="avatar"
+          style={{ objectFit: "cover" }}
         />
       </div>
       <Popup {...popup} classNames={styles["popup"]}>

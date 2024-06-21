@@ -16,7 +16,6 @@ const Logo: FC<LogoProps> = ({ classNames, alt }) => {
           src={"/svg/logo.svg"}
           alt={alt || "logo"}
           priority
-          style={{ objectFit: "cover" }}
         />
       </Link>
     </div>
