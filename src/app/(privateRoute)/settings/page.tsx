@@ -1,5 +1,5 @@
 import React from "react";
-import { FullName, Layout, User, Location, Password } from "./ui";
+import { FullName, Layout, User, Location, Password, DeleteAcc } from "./ui";
 import styles from "./settings.module.scss";
 
 function SettingsPage() {
@@ -15,6 +15,9 @@ function SettingsPage() {
         </Layout>
         <Layout title="Update password" fullWidth>
           <Password />
+        </Layout>
+        <Layout fullWidth>
+          <DeleteAcc />
         </Layout>
       </div>
     </section>
