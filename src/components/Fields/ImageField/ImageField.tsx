@@ -19,6 +19,7 @@ const ImageField: FC<ImageFieldProps> = ({
   placeholder,
   disabled,
   sizes = "",
+  objectFit = "contain",
   showCrossButton = false,
 }) => {
   const { register, setValue, getValues } = useFormContext();
@@ -31,11 +32,8 @@ const ImageField: FC<ImageFieldProps> = ({
 
   useEffect(() => {
     if (value) setPreview(URL.createObjectURL(value));
-  }, [value]);
-
-  useEffect(() => {
     if (previewUrl) setPreview(previewUrl);
-  }, [previewUrl]);
+  }, [value, previewUrl]);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;
@@ -80,6 +78,7 @@ const ImageField: FC<ImageFieldProps> = ({
             placeholder={placeholder}
             sizes={sizes}
             fill
+            style={{ objectFit }}
           />
         </div>
       )}

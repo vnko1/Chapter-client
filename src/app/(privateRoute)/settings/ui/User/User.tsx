@@ -9,6 +9,8 @@ import { default_avatar } from "@/utils";
 import { EndpointsEnum, IconEnum } from "@/types";
 import { privateApi } from "@/api";
 
+import { Layout, Status } from "..";
+
 import styles from "./User.module.scss";
 
 const User: FC = () => {
@@ -50,6 +52,7 @@ const User: FC = () => {
             previewUrl={user?.avatarUrl || default_avatar}
             previewClassNames={styles["preview"]}
             sizes="120"
+            objectFit="cover"
           />
         </FormProvider>
         <p className={styles["user__email"]}>{user?.email}</p>
@@ -66,6 +69,9 @@ const User: FC = () => {
         >
           Upload new photo
         </UIButton>
+        <Layout>
+          <Status />
+        </Layout>
       </div>
     </div>
   );

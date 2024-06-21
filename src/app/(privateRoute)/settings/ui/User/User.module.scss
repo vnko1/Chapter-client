@@ -1,16 +1,19 @@
 .user {
+  @apply md:flex md:gap-2-xs;
+
   &__preview {
-    @apply mb-1-xs flex flex-col gap-1-xs items-center;
+    @apply mb-1-xs flex flex-col gap-1-xs items-center base:justify-start;
   }
 
   &__email {
-    // @apply text-center mx-auto;
+    @apply text-grey-1000 text-sm;
   }
 
-  &__ststus {
+  &__status {
+    @apply flex flex-col items-center gap-1-lg md:w-full;
   }
 }
 
 .preview {
-  @apply w-[120px] h-[120px] rounded-lg;
+  @apply w-[120px] h-[120px] rounded-lg md:w-[210px] md:h-[210px] base:w-[216px] base:h-[216px];
 }

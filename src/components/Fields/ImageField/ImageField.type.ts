@@ -13,4 +13,5 @@ export type ImageFieldProps = {
   sizes?: string;
   id: string;
   showCrossButton?: boolean;
+  objectFit?: "contain" | "cover";
 };
