@@ -38,7 +38,10 @@ const Avatar: FC<AvatarProps> = ({ src, alt, classNames }) => {
             Log out of profile
           </button>
           <button
-            onClick={async () => await privateApi.delete(EndpointsEnum.Profile)}
+            onClick={async () => {
+              await privateApi.delete(EndpointsEnum.Profile);
+              logout();
+            }}
           >
             Delete user account
           </button>

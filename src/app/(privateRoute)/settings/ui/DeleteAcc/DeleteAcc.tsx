@@ -2,11 +2,15 @@
 import { FC } from "react";
 
 import { privateApi } from "@/api";
+import { logout } from "@/lib/session";
 import { EndpointsEnum } from "@/types";
 import styles from "./DeleteAcc.module.scss";
 
 const DeleteAcc: FC = () => {
-  const onDeleteAcc = async () => privateApi.delete(EndpointsEnum.Profile);
+  const onDeleteAcc = async () => {
+    await privateApi.delete(EndpointsEnum.Profile);
+    logout();
+  };
   return (
     <div className={styles["account-delete"]}>
       <h3 className={styles["account-delete__title"]}>
