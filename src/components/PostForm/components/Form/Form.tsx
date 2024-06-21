@@ -44,8 +44,9 @@ const Form: FC<FormProps> = (props) => {
         id="image"
         name="image"
         inputRef={imageRef}
-        previewClassNames="mb-2-xs"
+        previewClassNames={styles["preview"]}
         previewUrl={previewUrl}
+        showCrossButton
       />
       <TextAreaField
         id="text"

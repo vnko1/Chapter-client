@@ -35,3 +35,7 @@
 .image__label {
   @apply text-xs text-grey-1000;
 }
+
+.preview {
+  @apply h-[280px] rounded-lg mb-2-xs;
+}

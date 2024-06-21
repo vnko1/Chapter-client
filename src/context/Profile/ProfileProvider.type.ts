@@ -4,7 +4,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type ProfileProviderProps = { children: ReactNode };
 
 export type ProfileContextType = {
-  user: IUser | null;
+  user: IUser;
   setUser: Dispatch<SetStateAction<IUser | null>>;
   setActive: Dispatch<SetStateAction<boolean>>;
 };

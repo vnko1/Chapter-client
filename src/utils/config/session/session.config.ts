@@ -4,11 +4,13 @@ const ttl = process.env.AUTH_SESSION_TOKEN_LIFE as string;
 
 export interface SessionData {
   access_token: string | null;
+  refresh_token: string | null;
   isLoggedIn: boolean;
 }
 
 export const defaultSession: SessionData = {
   access_token: null,
+  refresh_token: null,
   isLoggedIn: false,
 };
 

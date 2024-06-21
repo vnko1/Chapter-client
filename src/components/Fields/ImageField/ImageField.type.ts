@@ -11,6 +11,7 @@ export type ImageFieldProps = {
   disabled?: boolean;
   placeholder?: PlaceholderValue;
   sizes?: string;
-  objectFit?: string;
   id: string;
+  showCrossButton?: boolean;
+  objectFit?: "contain" | "cover";
 };

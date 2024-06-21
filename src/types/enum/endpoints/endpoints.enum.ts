@@ -10,6 +10,9 @@ export enum EndpointsEnum {
   Restore_acc = "/auth/restore",
   Confirm_restore_acc = "/auth/restore/confirm",
   Refresh_Token = "/auth/refresh",
+
   Profile = "/users",
+  Password = "/users/password",
+
   Post = "/posts/post",
 }

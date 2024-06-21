@@ -115,8 +115,8 @@ const RegisterForm: FC = () => {
         {showOtp ? (
           <>
             <p className={styles["message"]}>
-              &apos;We just sent you a temporary sign code. Please check your
-              inbox and paste code below.&apos;
+              We just sent you a temporary sign code. Please check your inbox
+              and paste code below.
             </p>
 
             <TextField

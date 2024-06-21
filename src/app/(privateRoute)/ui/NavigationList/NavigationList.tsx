@@ -8,6 +8,7 @@ import { useNavigationToggler } from "@/context";
 import { useModal } from "@/hooks";
 import { Icon } from "@/components";
 import { IconEnum } from "@/types";
+import { logout } from "@/lib/session";
 
 import { ContactUs } from "@/app/ui";
 
@@ -26,13 +27,6 @@ const NavigationList: FC<NavigationListProps> = ({
   function handleClickNavLink() {
     setIsActiveMenu && setIsActiveMenu(false);
   }
-
-  //   const logOut = async () => {
-  //     try {
-  //       //   await dispatch(fetchIsLogoutUser());
-  //     } finally {
-  //     }
-  //   };
 
   return (
     <>
@@ -77,6 +71,7 @@ const NavigationList: FC<NavigationListProps> = ({
             <button
               className={`${styles["navigation-list__link"]} ${styles["navigation-list__button"]}`}
               aria-label="Open modal button"
+              onClick={async () => await logout()}
             >
               <Icon
                 icon={IconEnum.SignOut}
