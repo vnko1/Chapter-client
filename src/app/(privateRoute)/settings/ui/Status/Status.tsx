@@ -1,9 +1,9 @@
 "use client";
 import React, { FC, useRef } from "react";
+import { useProfileContext } from "@/context";
+import { useEditField } from "@/hooks";
 import { IconButton } from "..";
 import styles from "./Status.module.scss";
-import useEditField from "@/hooks/useEditField/useEditField";
-import { useProfileContext } from "@/context";
 
 const Status: FC = () => {
   const { user } = useProfileContext();

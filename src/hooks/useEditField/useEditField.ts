@@ -9,7 +9,7 @@ import { privateApi } from "@/api";
 import { EndpointsEnum } from "@/types";
 import { isAxiosError } from "axios";
 
-const useEditField = ({
+export const useEditField = ({
   fieldType,
   text,
   nodeRef,
@@ -46,22 +46,24 @@ const useEditField = ({
             setError(error.response?.data.errorMessage);
           }
         }
-
-        //   const res = await profile.userSave({
-        //     userStatus: value || " ",
-        //   });
-        //   if (res instanceof AxiosError) {
-        //     if (res.response && res.response.status > 400)
-        //       return setError("Incorrect text");
-        //   }
       }
+
       if (fieldType === "fullName" && value) {
         if (!simpleStringRegex.test(value)) return;
-        const [firstName, lastName] = value
-          .trim()
-          .split(" ")
-          .filter((el) => el);
-        if (firstName && lastName) console.log(firstName, lastName);
+        const [firstName, lastName] = value.trim().split(" ");
+
+        if (firstName.trim() && lastName.trim()) {
+          try {
+            await privateApi.patch(EndpointsEnum.Profile, {
+              firstName,
+              lastName,
+            });
+          } catch (error) {
+            if (isAxiosError(error)) {
+              setError(error.response?.data.errorMessage);
+            }
+          }
+        }
       }
     }
     setIsEditing(false);
@@ -88,5 +90,3 @@ const useEditField = ({
     onHandleFocus,
   };
 };
-
-export default useEditField;
