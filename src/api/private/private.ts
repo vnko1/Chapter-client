@@ -41,9 +41,10 @@ privateApi.interceptors.response.use(
     }
 
     const originalRequest = error.config;
-
+    console.log(error.response.data.path);
     if (
       error.response.status === 401 &&
+      error.response.data.path !== EndpointsEnum.Password &&
       error.config &&
       !originalRequest._retry
     ) {
