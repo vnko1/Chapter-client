@@ -21,7 +21,22 @@ const CountrySelect: FC<CountrySelectProps> = ({
   } = useProfileContext();
   const [selectMenuIsOpen, setSelectMenuIsOpen] = useState(false);
 
-  const countryRef = useRef(null);
+  const countryRef = useRef<HTMLLabelElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (
+        countryRef.current &&
+        !countryRef.current.contains(event.target as HTMLLabelElement)
+      )
+        setSelectMenuIsOpen(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const country = countryList.find((country) => country.id === countryId);

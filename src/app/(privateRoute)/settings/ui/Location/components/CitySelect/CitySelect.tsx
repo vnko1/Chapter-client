@@ -15,7 +15,22 @@ const CitySelect: FC<CitySelectProps> = ({
   ...props
 }) => {
   const [selectMenuIsOpen, setSelectMenuIsOpen] = useState(false);
-  const cityRef = useRef(null);
+  const cityRef = useRef<HTMLLabelElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (
+        cityRef.current &&
+        !cityRef.current.contains(event.target as HTMLLabelElement)
+      )
+        setSelectMenuIsOpen(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const city = citiesList.find((item) => item.id === cityId);

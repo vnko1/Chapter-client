@@ -2,7 +2,10 @@
 import { FC, useState, FormEvent, useEffect, useRef } from "react";
 import { GetCountries } from "react-country-state-city";
 
+import { privateApi } from "@/api";
+import { EndpointsEnum } from "@/types";
 import { UIButton } from "@/components";
+
 import { CountrySelect, RegionSelect, CitySelect } from "./components";
 import { CityType, CountriesType, StateType } from "./Location.type";
 import styles from "./Location.module.scss";
@@ -38,15 +41,12 @@ const Location: FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // const profile = new ProfileUpdateApi(setIsLoading, setError);
 
     const location = selectedCity
       ? selectedCity.concat(", ", selectedCountry)
       : selectedCountry;
+    await privateApi.patch(EndpointsEnum.Profile, { location });
 
-    // await profile.userSave({
-    //   location,
-    // });
     setSelectedCountry(location);
     setCountryId(0);
     setIcon("");
@@ -108,7 +108,7 @@ const Location: FC = () => {
       />
 
       <UIButton
-        className={`${styles["location-form__button"]} ${styles["button"]}`}
+        classNames={`${styles["location-form__button"]} ${styles["button"]}`}
         isLoading={isLoading}
         disabled={buttonIsDisabled}
         type="submit"

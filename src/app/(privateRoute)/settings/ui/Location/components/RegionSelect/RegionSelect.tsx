@@ -15,7 +15,22 @@ const StateSelect: FC<StateSelectProps> = ({
   ...props
 }) => {
   const [selectMenuIsOpen, setSelectMenuIsOpen] = useState(false);
-  const stateRef = useRef(null);
+  const stateRef = useRef<HTMLLabelElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (
+        stateRef.current &&
+        !stateRef.current.contains(event.target as HTMLLabelElement)
+      )
+        setSelectMenuIsOpen(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const state = regionList.find((state) => state.id === regionId);
