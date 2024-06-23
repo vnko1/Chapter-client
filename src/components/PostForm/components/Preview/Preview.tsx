@@ -18,6 +18,7 @@ const Preview: FC<PreviewProps> = ({
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (values.image) {
@@ -37,7 +38,7 @@ const Preview: FC<PreviewProps> = ({
     if (values.text) data.append("text", values.text);
     if (values.image) data.append("image", values.image);
     if (values.title) data.append("title", values.title);
-
+    setIsLoading(true);
     try {
       const res = await addPost(data);
 
@@ -48,6 +49,8 @@ const Preview: FC<PreviewProps> = ({
       if (error instanceof CustomError) {
         setError(error.errorMessage);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,6 +59,8 @@ const Preview: FC<PreviewProps> = ({
     if (values.text) data.append("text", values.text);
     if (values.image) data.append("image", values.image);
     if (values.title) data.append("title", values.title);
+
+    setIsLoading(true);
     try {
       const res = await changePost({ postId, data });
       if (res?.isError) throw new CustomError(res.error);
@@ -65,6 +70,8 @@ const Preview: FC<PreviewProps> = ({
       if (error instanceof CustomError) {
         setError(error.errorMessage);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,6 +102,7 @@ const Preview: FC<PreviewProps> = ({
         <UIButton
           onClick={() => setShowPreview(false)}
           fullWidth
+          isLoading={isLoading}
           variant="outlined"
           aria-label="Back to previous page button"
         >
