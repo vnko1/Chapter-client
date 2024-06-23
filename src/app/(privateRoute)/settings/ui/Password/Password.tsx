@@ -2,11 +2,10 @@
 import React, { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { isAxiosError } from "axios";
 
-import { EndpointsEnum } from "@/types";
-import { privateApi } from "@/api";
 import { PasswordField, UIButton } from "@/components";
+import { CustomError } from "@/services";
+import { updateUserPassword } from "@/lib/actions";
 
 import { FormValues, passwordSchema } from "./validationSchema";
 import styles from "./Password.module.scss";
@@ -27,13 +26,15 @@ const Password: FC = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await privateApi.patch(EndpointsEnum.Password, data);
+      const res = await updateUserPassword(data);
+      if (res?.isError) throw new CustomError(res.error);
+
       reset();
     } catch (error) {
-      if (isAxiosError(error)) {
+      if (error instanceof CustomError) {
         setError("root.serverError", {
           type: "custom",
-          message: error.response?.data.errorMessage,
+          message: error.errorMessage,
         });
       }
     }

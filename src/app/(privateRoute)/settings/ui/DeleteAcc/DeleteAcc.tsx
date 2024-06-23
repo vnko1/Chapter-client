@@ -1,15 +1,13 @@
 "use client";
 import { FC } from "react";
 
-import { privateApi } from "@/api";
-import { logout } from "@/lib/session";
-import { EndpointsEnum } from "@/types";
+import { deleteUserAccount } from "@/lib/actions";
+
 import styles from "./DeleteAcc.module.scss";
 
 const DeleteAcc: FC = () => {
   const onDeleteAcc = async () => {
-    await privateApi.delete(EndpointsEnum.Profile);
-    logout();
+    await deleteUserAccount(undefined);
   };
   return (
     <div className={styles["account-delete"]}>
@@ -19,7 +17,7 @@ const DeleteAcc: FC = () => {
       <button
         onClick={onDeleteAcc}
         className={styles["account-delete__button"]}
-        aria-label="Open delete account confirmation menu"
+        aria-label="delete account"
       >
         Delete
       </button>

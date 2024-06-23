@@ -5,9 +5,8 @@ import Image from "next/image";
 import { logout } from "@/lib/session";
 import { Popup } from "@/components";
 import { useModal } from "@/hooks";
-import { privateApi } from "@/api";
-import { EndpointsEnum } from "@/types";
 import { default_avatar } from "@/utils";
+import { deleteUserAccount } from "@/lib/actions";
 
 import { AvatarProps } from "./Avatar.type";
 import styles from "./Avatar.module.scss";
@@ -17,6 +16,10 @@ const Avatar: FC<AvatarProps> = ({ src, alt, classNames }) => {
   const { setActive } = popup;
   const onHandleClick = () => {
     setActive(true);
+  };
+
+  const deleteAcc = async () => {
+    await deleteUserAccount(undefined);
   };
 
   return (
@@ -37,14 +40,7 @@ const Avatar: FC<AvatarProps> = ({ src, alt, classNames }) => {
           <button onClick={async () => await logout()}>
             Log out of profile
           </button>
-          <button
-            onClick={async () => {
-              await privateApi.delete(EndpointsEnum.Profile);
-              logout();
-            }}
-          >
-            Delete user account
-          </button>
+          <button onClick={deleteAcc}>Delete user account</button>
         </div>
       </Popup>
     </div>

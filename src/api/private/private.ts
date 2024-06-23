@@ -1,76 +1,8 @@
-// import axios, { AxiosResponse } from "axios";
-
 import { EndpointsEnum } from "@/types";
 import { getParsedSession, login, logout } from "@/lib/session";
 import { CustomError } from "@/services";
-import axios, { AxiosResponse } from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
-
-export const privateAxiosApi = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-
-  headers: {
-    "X-Requested-With": "XMLHttpRequest",
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-});
-
-privateAxiosApi.interceptors.request.use(
-  async (config) => {
-    const { access_token } = await getParsedSession();
-
-    if (access_token)
-      config.headers.Authorization = "Bearer" + " " + access_token;
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-privateAxiosApi.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const { access_token, refresh_token } = await getParsedSession();
-
-    if (!access_token) {
-      return Promise.reject(error);
-    }
-
-    const originalRequest = error.config;
-
-    if (
-      error.response.status === 401 &&
-      error.response.data.path !== EndpointsEnum.Password &&
-      error.config &&
-      !originalRequest._retry
-    ) {
-      error.config._isRetry = true;
-      try {
-        const res: AxiosResponse = await axios.post(
-          BASE_URL + EndpointsEnum.Refresh_Token,
-          { refresh_token },
-          {
-            withCredentials: true,
-          }
-        );
-
-        await login(res.data.data.access_token, res.data.data.refresh_token);
-
-        return privateAxiosApi.request(originalRequest);
-      } catch (e) {
-        logout();
-        return Promise.reject(error);
-      }
-    }
-    throw error;
-  }
-);
 
 const originalRequest = async (url: string, config: RequestInit = {}) => {
   const response = await fetch(BASE_URL + url, config);
