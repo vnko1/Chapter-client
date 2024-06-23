@@ -1,11 +1,10 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
-import { isAxiosError } from "axios";
 
 import { UIButton } from "@/components";
-import { EndpointsEnum } from "@/types";
-import { privateApi } from "@/api";
+import { CustomError } from "@/services";
+import { addPost, changePost } from "@/lib/actions";
 
 import { PreviewProps } from "./Preview.type";
 import styles from "./Preview.module.scss";
@@ -34,33 +33,43 @@ const Preview: FC<PreviewProps> = ({
   };
 
   const publishPost = async () => {
+    const data = new FormData();
+    if (values.text) data.append("text", values.text);
+    if (values.image) data.append("image", values.image);
+    if (values.title) data.append("title", values.title);
+
     try {
-      await privateApi.post(EndpointsEnum.Post, values, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await addPost(data);
+
+      if (res?.isError) throw new CustomError(res.error);
+
       resetFields();
     } catch (error) {
-      if (isAxiosError(error)) {
-        setError(error.response?.data.errorMessage);
+      if (error instanceof CustomError) {
+        setError(error.errorMessage);
       }
     }
   };
 
-  const editPost = async () => {
+  const editPost = async (postId: string) => {
+    const data = new FormData();
+    if (values.text) data.append("text", values.text);
+    if (values.image) data.append("image", values.image);
+    if (values.title) data.append("title", values.title);
     try {
-      await privateApi.patch(EndpointsEnum.Post + "/" + postId, values, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await changePost({ postId, data });
+      if (res?.isError) throw new CustomError(res.error);
+
       resetFields();
     } catch (error) {
-      if (isAxiosError(error)) {
-        setError(error.response?.data.errorMessage);
+      if (error instanceof CustomError) {
+        setError(error.errorMessage);
       }
     }
   };
 
   const submitChanges = async () => {
-    if (postId) return await editPost();
+    if (postId) return await editPost(postId);
     return await publishPost();
   };
 
@@ -70,10 +79,9 @@ const Preview: FC<PreviewProps> = ({
         <div className={styles["preview__image"]}>
           <Image
             src={preview}
-            objectFit="cover"
-            objectPosition="center"
             alt="post image"
             fill
+            style={{ objectFit: "cover", objectPosition: "center" }}
           />
         </div>
       )}
@@ -93,8 +101,6 @@ const Preview: FC<PreviewProps> = ({
           Back
         </UIButton>
         <UIButton
-          //   disabled={isLoading}
-          //   isLoading={isLoading}
           onClick={submitChanges}
           aria-label="Publish post button"
           fullWidth
