@@ -2,9 +2,10 @@
 import { FC, useState, FormEvent, useEffect, useRef } from "react";
 import { GetCountries } from "react-country-state-city";
 
-import { privateApi } from "@/api";
-import { EndpointsEnum } from "@/types";
+import { useProfileContext } from "@/context";
+import { CustomError } from "@/services";
 import { UIButton } from "@/components";
+import { editProfile } from "@/lib/actions";
 
 import { CountrySelect, RegionSelect, CitySelect } from "./components";
 import { CityType, CountriesType, StateType } from "./Location.type";
@@ -12,6 +13,7 @@ import styles from "./Location.module.scss";
 
 const Location: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useProfileContext();
 
   const [countryId, setCountryId] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -45,19 +47,30 @@ const Location: FC = () => {
     const location = selectedCity
       ? selectedCity.concat(", ", selectedCountry)
       : selectedCountry;
-    await privateApi.patch(EndpointsEnum.Profile, { location });
+    const data = new FormData();
+    data.append("location", location);
+    try {
+      const res = await editProfile(data);
 
-    setSelectedCountry(location);
-    setCountryId(0);
-    setIcon("");
+      if (res?.isError) throw new CustomError(res.error);
 
-    setRegionList([]);
-    setSelectedRegion("");
-    setRegionId(0);
+      setUser(res.data);
+      setSelectedCountry(location);
+      setCountryId(0);
+      setIcon("");
 
-    setCitiesList([]);
-    setSelectedCity("");
-    setCityId(0);
+      setRegionList([]);
+      setSelectedRegion("");
+      setRegionId(0);
+
+      setCitiesList([]);
+      setSelectedCity("");
+      setCityId(0);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        console.log("🚀 ~ handleSubmit ~ error:", error);
+      }
+    }
   };
 
   const buttonIsDisabled =

@@ -6,8 +6,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useProfileContext } from "@/context";
 import { ImageField, UIButton } from "@/components";
 import { default_avatar } from "@/utils";
-import { EndpointsEnum, IconEnum } from "@/types";
-import { privateApi } from "@/api";
+import { IconEnum } from "@/types";
+import { CustomError } from "@/services";
+import { editProfile } from "@/lib/actions";
 
 import { Layout, Status } from "..";
 
@@ -25,15 +26,18 @@ const User: FC = () => {
 
   useEffect(() => {
     if (image) {
+      const data = new FormData();
+      data.append("image", image);
       setIsLoading(true);
-      privateApi
-        .patch(
-          EndpointsEnum.Profile,
-          { image },
-          { headers: { "Content-Type": "multipart/form-data" } }
-        )
+      editProfile(data)
         .then((res) => {
-          setUser(res.data.data);
+          if (res?.isError) throw new CustomError(res.error);
+          setUser(res.data);
+        })
+        .catch((error) => {
+          if (error instanceof CustomError) {
+            console.log(error);
+          }
         })
         .finally(() => {
           setIsLoading(false);
@@ -49,7 +53,7 @@ const User: FC = () => {
             name="image"
             id="image"
             inputRef={inputRef}
-            previewUrl={user?.avatarUrl || default_avatar}
+            previewUrl={user.avatarUrl || default_avatar}
             previewClassNames={styles["preview"]}
             sizes="120"
             objectFit="cover"

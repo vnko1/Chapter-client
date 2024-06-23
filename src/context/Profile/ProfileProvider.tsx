@@ -3,9 +3,8 @@ import { FC, useEffect, useState } from "react";
 
 import { Loader, PostForm } from "@/components";
 import { useModal } from "@/hooks";
-import { EndpointsEnum, IUser } from "@/types";
-import { privateApi } from "@/api";
-import { logout } from "@/lib/session";
+import { IUser } from "@/types";
+import { getMe } from "@/lib/actions";
 
 import { ProfileContext } from "./hook";
 import { ProfileProviderProps } from "./ProfileProvider.type";
@@ -16,13 +15,9 @@ const ProfileProvider: FC<ProfileProviderProps> = ({ children }) => {
   const postModal = useModal();
 
   useEffect(() => {
-    privateApi(EndpointsEnum.Profile)
-      .then((res) => {
-        setUser(res.data.data);
-      })
-      .catch(async () => {
-        await logout();
-      });
+    getMe(undefined).then((res) => {
+      setUser(res.data);
+    });
   }, []);
 
   if (!user) return <Loader active />;

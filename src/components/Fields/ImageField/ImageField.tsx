@@ -32,8 +32,11 @@ const ImageField: FC<ImageFieldProps> = ({
 
   useEffect(() => {
     if (value) setPreview(URL.createObjectURL(value));
+  }, [value]);
+
+  useEffect(() => {
     if (previewUrl) setPreview(previewUrl);
-  }, [value, previewUrl]);
+  }, [previewUrl]);
 
   const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;

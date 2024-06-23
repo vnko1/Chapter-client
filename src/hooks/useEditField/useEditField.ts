@@ -1,13 +1,12 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-// import { AxiosError } from "axios";
 
 import { simpleStringRegex } from "@/utils";
 import { EditFieldType } from "./useEditField.type";
-import { privateApi } from "@/api";
-import { EndpointsEnum } from "@/types";
-import { isAxiosError } from "axios";
+import { editProfile } from "@/lib/actions";
+import { CustomError } from "@/services";
+import { useProfileContext } from "@/context";
 
 export const useEditField = ({
   fieldType,
@@ -18,6 +17,7 @@ export const useEditField = ({
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState<string>(text || "");
   const [error, setError] = useState<string | null>(null);
+  const { setUser } = useProfileContext();
 
   useEffect(() => {
     if (isEditing) {
@@ -34,39 +34,35 @@ export const useEditField = ({
   const onHandleEdit = () => setIsEditing(true);
 
   const onHandleSave = async () => {
-    if (text?.trim() !== value.trim()) {
-      if (fieldType === "status") {
-        if (value.length > stringLength) return setError("Too long");
-        try {
-          await privateApi.patch(EndpointsEnum.Profile, {
-            status: value || "",
-          });
-        } catch (error) {
-          if (isAxiosError(error)) {
-            setError(error.response?.data.errorMessage);
-          }
-        }
-      }
+    if (text?.trim() === value.trim()) return;
+    const data = new FormData();
 
-      if (fieldType === "fullName" && value) {
-        if (!simpleStringRegex.test(value)) return;
-        const [firstName, lastName] = value.trim().split(" ");
+    if (fieldType === "status") {
+      if (value.length > stringLength) return setError("Too long");
+      data.append("status", value);
+    }
 
-        if (firstName.trim() && lastName.trim()) {
-          try {
-            await privateApi.patch(EndpointsEnum.Profile, {
-              firstName,
-              lastName,
-            });
-          } catch (error) {
-            if (isAxiosError(error)) {
-              setError(error.response?.data.errorMessage);
-            }
-          }
-        }
+    if (fieldType === "fullName" && value) {
+      if (!simpleStringRegex.test(value)) return;
+      const [firstName, lastName] = value.trim().split(" ");
+
+      if (firstName.trim() && lastName.trim()) {
+        data.append("firstName", firstName);
+        data.append("lastName", lastName);
       }
     }
-    setIsEditing(false);
+
+    try {
+      const res = await editProfile(data);
+      if (res?.isError) throw new CustomError(res.error);
+      setUser(res.data);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        setError(error.errorMessage);
+      }
+    } finally {
+      setIsEditing(false);
+    }
   };
 
   const onHandleChange = (
