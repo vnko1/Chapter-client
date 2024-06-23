@@ -23,7 +23,8 @@ export async function middleware(req: NextRequest) {
   if (!isLoggedIn) {
     if (currentPath.startsWith(LinksEnum.DASHBOARD))
       return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
-
+    if (currentPath.startsWith(LinksEnum.SEARCH))
+      return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
     if (currentPath.startsWith(LinksEnum.SETTINGS))
       return NextResponse.rewrite(new URL(LinksEnum.LOG_IN, req.url));
   }
