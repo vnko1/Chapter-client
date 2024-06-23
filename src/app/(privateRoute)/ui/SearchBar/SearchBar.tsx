@@ -1,22 +1,26 @@
-import { ChangeEvent, FC } from "react";
+"use client";
+import { FC } from "react";
+import { useForm } from "react-hook-form";
+import { useDebouncedCallback } from "use-debounce";
 
-import { SearchBarProps } from "./SearchBar.type";
 import { SearchField } from "@/components";
+
 import styles from "./SearchBar.module.scss";
+import { SearchBarProps } from "./SearchBar.type";
 
 const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("🚀 ~ event:", event.target.value);
-  };
+  const { control } = useForm({ defaultValues: { query: "" } });
+  const handleSearch = useDebouncedCallback((term: string) => {
+    console.log("🚀 ~ handleSearch ~ term:", term);
+  }, 300);
 
   return (
     <div className={styles["search__wrapper"]}>
       <SearchField
-        id={"query"}
-        name={"query"}
         classNames={classNames}
+        control={control}
         placeholder="Find your friends here"
-        onChange={onChange}
+        handleSearch={handleSearch}
         autoComplete="off"
       />
     </div>
