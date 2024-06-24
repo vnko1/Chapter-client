@@ -9,20 +9,22 @@ import { UserProps } from "./User.type";
 import styles from "./User.module.scss";
 
 const User: FC<UserProps> = (props) => {
-  console.log("🚀 ~ props:", props);
   return (
-    <Link
-      href={LinksEnum.PROFILE + "/" + props.userId}
-      className={styles["link"]}
-    >
-      <Image
-        alt="avatar"
-        src={props.avatarUrl || default_avatar}
-        width={52}
-        height={52}
-        className={styles["avatar"]}
-      />
-    </Link>
+    <>
+      <Link
+        href={LinksEnum.PROFILE + "/" + props.userId}
+        className={styles["link"]}
+      >
+        <Image
+          alt="avatar"
+          src={props.avatarUrl || default_avatar}
+          width={52}
+          height={52}
+          className={styles["avatar"]}
+        />
+        <span className={styles["nickname"]}>{props.nickName}</span>
+      </Link>
+    </>
   );
 };
 
