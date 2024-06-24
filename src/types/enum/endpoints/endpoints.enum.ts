@@ -15,4 +15,6 @@ export enum EndpointsEnum {
   Password = "/users/password",
 
   Post = "/posts/post",
+
+  Search = "/search",
 }

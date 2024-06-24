@@ -1,9 +1,9 @@
 .section {
-  @apply bg-white py-2-xs md:pt-5-xs px-2-md md:px-4-xl laptop:pt-3-lg base:bg-transparent;
+  @apply bg-white py-2-xs md:pt-5-xs px-2-md md:px-4-xl laptop:pt-3-lg base:bg-transparent max-md:h-svh;
 }
 
 .container {
-  @apply w-full mx-auto flex flex-col base:max-w-[960px] md:bg-white md:rounded-md md:px-[58px] md:py-3-xs base:px-[120px] base:pt-[66px] base:pb-[36px] gap-[24px] md:border md:border-grey-1010;
+  @apply w-full mx-auto flex flex-col base:max-w-[960px] md:bg-white md:rounded-md md:px-[58px] md:py-3-xs base:px-[120px] base:pt-[66px] base:pb-[36px] gap-[24px] md:border md:border-grey-1010 md:h-svh;
 }
 
 .title {
