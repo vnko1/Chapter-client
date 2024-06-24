@@ -1,7 +1,7 @@
 import React from "react";
 
-function GuestProfilePage(searchParams: { userId: string }) {
-  return <div>GuestProfilePage: {searchParams.userId}</div>;
+function GuestProfilePage({ params }: { params: { userId: string } }) {
+  return <div>GuestProfilePage: {params.userId}</div>;
 }
 
 export default GuestProfilePage;

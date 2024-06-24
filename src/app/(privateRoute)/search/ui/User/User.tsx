@@ -1,8 +1,12 @@
 import React, { FC } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+import { LinksEnum } from "@/types";
+import { default_avatar } from "@/utils";
+
 import { UserProps } from "./User.type";
 import styles from "./User.module.scss";
-import Link from "next/link";
-import { LinksEnum } from "@/types";
 
 const User: FC<UserProps> = (props) => {
   console.log("🚀 ~ props:", props);
@@ -11,7 +15,13 @@ const User: FC<UserProps> = (props) => {
       href={LinksEnum.PROFILE + "/" + props.userId}
       className={styles["link"]}
     >
-      User
+      <Image
+        alt="avatar"
+        src={props.avatarUrl || default_avatar}
+        width={52}
+        height={52}
+        className={styles["avatar"]}
+      />
     </Link>
   );
 };
