@@ -11,12 +11,11 @@ export enum LinksEnum {
   NOT_FOUND = "/404",
   PASSWORD_CHANGE = "/auth/change-password",
   PROFILE = "/profile",
-  GUEST_PROFILE = "/:Id",
   USER_BOOKS = "/books",
   SEARCH = "/search",
   GUEST_BOOKS = "/:id/books",
   NOTIFICATION = "/notifications",
-  GUEST_POST = "/post/:id",
+  GUEST_POST = "/post",
   TERMS = "/terms",
 }
 

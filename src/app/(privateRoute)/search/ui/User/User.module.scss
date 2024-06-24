@@ -1,3 +1,9 @@
+
+
+.link {
+  @apply flex  items-center gap-1-xs text-base text-black no-underline  md:text-lg md:font-semibold hover:no-underline;
+}
+
 .nickname {
   @apply hyphens-auto w-[138px] md:w-[231px] base:w-[300px] laptop:w-[386px];
 }

@@ -19,11 +19,13 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
   const renderUserRes = users.count ? (
     <>
       <p className={styles["title"]}>Users</p>
-      {users.rows.map((el, id) => (
-        <li key={id}>
-          <User {...el} />
-        </li>
-      ))}
+      <ul className={styles["list"]}>
+        {users.rows.map((el, id) => (
+          <li key={id}>
+            <User {...el} />
+          </li>
+        ))}
+      </ul>
     </>
   ) : null;
 
