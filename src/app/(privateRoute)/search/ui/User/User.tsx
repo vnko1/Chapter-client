@@ -7,6 +7,7 @@ import { default_avatar } from "@/utils";
 
 import { UserProps } from "./User.type";
 import styles from "./User.module.scss";
+import { Subscribe } from "@/app/ui";
 
 const User: FC<UserProps> = (props) => {
   return (
@@ -24,6 +25,7 @@ const User: FC<UserProps> = (props) => {
         />
         <span className={styles["nickname"]}>{props.nickName}</span>
       </Link>
+      <Subscribe userId={props.userId} imageUrl={props.avatarUrl} />
     </>
   );
 };

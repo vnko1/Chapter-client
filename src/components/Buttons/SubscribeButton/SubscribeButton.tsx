@@ -15,7 +15,7 @@ const SubscribeButton: FC<SubscribeButtonProps> = ({
   ...props
 }) => {
   const classnames = cn(
-    styles["post-button"],
+    styles["button"],
     {
       [styles["loading"]]: isLoading,
       [styles["contained"]]: variant === "contained",
