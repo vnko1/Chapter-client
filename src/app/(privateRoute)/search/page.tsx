@@ -2,7 +2,11 @@ import React from "react";
 import styles from "./search.module.scss";
 import { RecentData, Search } from "./ui";
 
-const SearchPage = ({ searchParams }: { searchParams: { query?: string } }) => {
+const SearchPage = async ({
+  searchParams,
+}: {
+  searchParams: { query?: string };
+}) => {
   return (
     <section className={styles["section"]}>
       <div className={styles["container"]}>
