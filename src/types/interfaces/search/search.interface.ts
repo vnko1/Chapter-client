@@ -10,15 +10,15 @@ type User = Omit<
   "cookieAccepted" | "createdAt" | "updatedAt" | "deletedAt"
 >;
 
-interface UsersQuery extends Count {
+export interface UsersQuery extends Count {
   rows: Array<User>;
 }
 
-interface PostsQuery extends Count {
+export interface PostsQuery extends Count {
   rows: Array<IPost>;
 }
 
-interface BooksQuery extends Count {
+export interface BooksQuery extends Count {
   rows: Array<IBook>;
 }
 
