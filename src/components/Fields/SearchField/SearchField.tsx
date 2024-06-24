@@ -28,7 +28,6 @@ const SearchField: FC<SearchFieldProps> = ({
       <Icon size={24} icon={IconEnum.Search} />
       <input
         {...props}
-        id="query"
         name={field.name}
         value={field.value}
         onBlur={field.onBlur}

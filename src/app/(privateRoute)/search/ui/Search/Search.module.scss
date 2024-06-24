@@ -1,3 +1,10 @@
+.wrapper {
+  @apply flex gap-2-md;
+}
+
+.button {
+  @apply bg-transparent md:hidden;
+}
 .search {
   @apply md:min-h-[52px];
 }

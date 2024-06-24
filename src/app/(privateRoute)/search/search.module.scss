@@ -3,7 +3,7 @@
 }
 
 .container {
-  @apply w-full mx-auto flex flex-col base:max-w-[960px] md:bg-white md:rounded-md md:px-[58px] md:py-3-xs base:px-[120px] base:pt-[66px] base:pb-[36px] gap-[24px];
+  @apply w-full mx-auto flex flex-col base:max-w-[960px] md:bg-white md:rounded-md md:px-[58px] md:py-3-xs base:px-[120px] base:pt-[66px] base:pb-[36px] gap-[24px] md:border md:border-grey-1010;
 }
 
 .title {

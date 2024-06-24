@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./search.module.scss";
-import { Search } from "./ui";
+import { RecentData, Search } from "./ui";
 
 const SearchPage = ({ searchParams }: { searchParams: { query?: string } }) => {
   return (
@@ -8,6 +8,7 @@ const SearchPage = ({ searchParams }: { searchParams: { query?: string } }) => {
       <div className={styles["container"]}>
         <h1 className={styles["title"]}>Search</h1>
         <Search query={searchParams.query} />
+        <RecentData query={searchParams.query} />
       </div>
     </section>
   );
