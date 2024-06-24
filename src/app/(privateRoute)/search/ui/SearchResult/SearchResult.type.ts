@@ -1,1 +1,1 @@
-export type SearchResultProps = { searchRes: { users: {} } };
+// export type SearchResultProps = { searchRes: { users: {} } };
