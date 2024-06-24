@@ -25,7 +25,7 @@ const User: FC<UserProps> = (props) => {
         />
         <span className={styles["nickname"]}>{props.nickName}</span>
       </Link>
-      <Subscribe userId={props.userId} imageUrl={props.avatarUrl} />
+      <Subscribe userId={props.userId} classNames={styles["button"]} />
     </>
   );
 };

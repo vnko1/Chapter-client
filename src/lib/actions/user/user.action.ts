@@ -6,7 +6,8 @@ import { EndpointsEnum } from "@/types";
 import { tryCatchWrapper } from "@/utils";
 
 export const getMe = tryCatchWrapper(
-  async () => await privateApi(EndpointsEnum.Profile)
+  async () =>
+    await privateApi(EndpointsEnum.Profile, { next: { tags: ["profile"] } })
 );
 
 export const editProfile = tryCatchWrapper(
@@ -37,3 +38,8 @@ export const deleteUserAccount = tryCatchWrapper(async () => {
   await privateApi(EndpointsEnum.Profile, { method: "DELETE" });
   await logout();
 });
+
+export const subscribeToggler = tryCatchWrapper(
+  async (userId: string) =>
+    await privateApi(EndpointsEnum.Subscribe + "/" + userId, { method: "PUT" })
+);

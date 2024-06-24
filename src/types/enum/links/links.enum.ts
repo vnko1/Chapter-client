@@ -15,7 +15,7 @@ export enum LinksEnum {
   SEARCH = "/search",
   GUEST_BOOKS = "/:id/books",
   NOTIFICATION = "/notifications",
-  GUEST_POST = "/post",
+  POST = "/post",
   TERMS = "/terms",
 }
 

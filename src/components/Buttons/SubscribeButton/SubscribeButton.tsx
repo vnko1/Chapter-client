@@ -7,21 +7,21 @@ import styles from "./SubscribeButton.module.scss";
 const SubscribeButton: FC<SubscribeButtonProps> = ({
   children,
   isDisabled = false,
-  className,
+  classNames,
   variant = "contained",
   type = "button",
   handleClick,
   isLoading,
   ...props
 }) => {
-  const classnames = cn(
+  const btnClassnames = cn(
     styles["button"],
     {
       [styles["loading"]]: isLoading,
       [styles["contained"]]: variant === "contained",
       [styles["outlined"]]: variant === "outlined",
     },
-    className
+    classNames
   );
   const onClick = () => {
     handleClick && handleClick();
@@ -31,7 +31,7 @@ const SubscribeButton: FC<SubscribeButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={classnames}
+      className={btnClassnames}
       disabled={isLoading || isDisabled}
       {...props}
     >

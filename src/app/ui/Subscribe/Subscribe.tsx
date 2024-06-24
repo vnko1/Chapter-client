@@ -1,12 +1,27 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { SubscribeButton } from "@/components";
-import { SubscribeProps } from "./Subscibe.type";
 import { useProfileContext } from "@/context";
+import { subscribeToggler } from "@/lib/actions";
+import { CustomError } from "@/services";
 
-const Subscribe: FC<SubscribeProps> = ({ classNames, userId, imageUrl }) => {
-  const { user } = useProfileContext();
+import { SubscribeProps } from "./Subscribe.type";
+
+const Subscribe: FC<SubscribeProps> = ({ classNames, userId }) => {
+  const { user, setUser } = useProfileContext();
   const [isFollow, setIsFollow] = useState(false);
+
+  const onClick = async () => {
+    try {
+      const res = await subscribeToggler(userId);
+      if (res?.isError) throw new CustomError(res.error);
+      setUser({ ...user, subscribedTo: res.data });
+    } catch (error) {
+      if (error instanceof CustomError) {
+        console.log("🚀 ~ onClick ~ error:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const isFollow = user.subscribedTo.some((user) => user.userId === userId);
@@ -17,9 +32,9 @@ const Subscribe: FC<SubscribeProps> = ({ classNames, userId, imageUrl }) => {
 
   return (
     <SubscribeButton
-      handleClick={() => {}}
+      handleClick={onClick}
       variant={btnVariant}
-      className={classNames}
+      classNames={classNames}
       aria-label="Subscribe profile button"
     >
       {isFollow ? "Unfollow" : "Follow"}
@@ -28,4 +43,3 @@ const Subscribe: FC<SubscribeProps> = ({ classNames, userId, imageUrl }) => {
 };
 
 export default Subscribe;
-// e78e2fac-2ab8-44d1-81a4-d84c5a12cc57

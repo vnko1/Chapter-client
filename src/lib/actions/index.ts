@@ -15,6 +15,7 @@ export {
   editProfile,
   updateUserPassword,
   deleteUserAccount,
+  subscribeToggler,
 } from "./user/user.action";
 export { addPost, changePost } from "./post/post.action";
 export { querySearch } from "./search/search.action";
