@@ -5,11 +5,15 @@ import Image from "next/image";
 import { LinksEnum } from "@/types";
 import { default_avatar } from "@/utils";
 
+import { Subscribe } from "@/app/ui";
 import { UserProps } from "./User.type";
 import styles from "./User.module.scss";
-import { Subscribe } from "@/app/ui";
 
-const User: FC<UserProps> = (props) => {
+const User: FC<UserProps> = ({
+  showFollowButton = false,
+  type = "page",
+  ...props
+}) => {
   return (
     <>
       <Link
@@ -23,9 +27,13 @@ const User: FC<UserProps> = (props) => {
           height={52}
           className={styles["avatar"]}
         />
-        <span className={styles["nickname"]}>{props.nickName}</span>
+        <span className={`${styles["nickname"]} ${styles[type]}`}>
+          {props.nickName}
+        </span>
       </Link>
-      <Subscribe userId={props.userId} classNames={styles["button"]} />
+      {showFollowButton && (
+        <Subscribe userId={props.userId} classNames={styles["button"]} />
+      )}
     </>
   );
 };

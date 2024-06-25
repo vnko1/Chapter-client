@@ -7,7 +7,7 @@ import { LinksEnum } from "@/types";
 import { BookProps } from "./Book.type";
 import styles from "./Book.module.scss";
 
-const Book: FC<BookProps> = (props) => {
+const Book: FC<BookProps> = ({type='page',...props}) => {
   return (
     <Link
       className={styles["link"]}
@@ -20,7 +20,7 @@ const Book: FC<BookProps> = (props) => {
         height={52}
         className={styles["image"]}
       />
-      <p className={styles["title"]}>{props.bookName}</p>
+      <p className={`${styles["title"]} ${styles[type]}`}>{props.bookName}</p>
     </Link>
   );
 };

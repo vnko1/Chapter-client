@@ -3,7 +3,14 @@
 }
 
 .nickname {
-  @apply hyphens-auto w-[138px] md:w-[231px] base:w-[300px] laptop:w-[386px];
+  @apply hyphens-auto;
+
+  &.page {
+    @apply w-[138px] md:w-[231px] base:w-[300px] laptop:w-[386px];
+  }
+
+  &.popup {
+  }
 }
 
 .button {

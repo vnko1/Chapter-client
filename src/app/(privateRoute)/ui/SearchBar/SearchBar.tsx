@@ -14,11 +14,10 @@ import { ResponseType, SearchBarProps } from "./SearchBar.type";
 import styles from "./SearchBar.module.scss";
 
 const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
-  const { control } = useForm({ defaultValues: { query: "" } });
+  const { control, watch } = useForm({ defaultValues: { query: "" } });
   const popup = useModal();
   const { setActive } = popup;
   const [searchRes, setSearchRes] = useState<SearchResponse | null>(null);
-
 
   const handleSearch = useDebouncedCallback(async (term: string) => {
     try {

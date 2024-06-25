@@ -21,7 +21,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
       <ul className={styles["list"]}>
         {users.rows.map((el, id) => (
           <li key={id}>
-            <User {...el} />
+            <User {...el} showFollowButton />
           </li>
         ))}
       </ul>

@@ -7,7 +7,7 @@ import { LinksEnum } from "@/types";
 import { PostProps } from "./Post.type";
 import styles from "./Post.module.scss";
 
-const Post: FC<PostProps> = (props) => {
+const Post: FC<PostProps> = ({ type = "page", ...props }) => {
   return (
     <Link className={styles["link"]} href={LinksEnum.POST + "/" + props.postId}>
       {props.imageUrl && (
@@ -19,7 +19,7 @@ const Post: FC<PostProps> = (props) => {
           className={styles["image"]}
         />
       )}
-      <p className={styles["title"]}>{props.title}</p>
+      <p className={`${styles["title"]} ${styles[type]}`}>{props.title}</p>
     </Link>
   );
 };
