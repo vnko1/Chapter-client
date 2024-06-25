@@ -28,9 +28,8 @@ const Avatar: FC<AvatarProps> = ({ src, alt, classNames }) => {
         <Image
           src={src ? src : default_avatar}
           alt={alt}
-          className={styles["avatar__image"]}
-          fill
           onClick={onHandleClick}
+          fill
           id="avatar"
           style={{ objectFit: "cover" }}
         />
