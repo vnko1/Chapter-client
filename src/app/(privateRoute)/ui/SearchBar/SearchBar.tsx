@@ -1,17 +1,33 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDebouncedCallback } from "use-debounce";
 
 import { SearchField } from "@/components";
+import { useModal } from "@/hooks";
+import { CustomError } from "@/services";
+import { querySearch } from "@/lib/actions";
+import { SearchResponse } from "@/types";
 
+import { SearchResult } from "..";
+import { ResponseType, SearchBarProps } from "./SearchBar.type";
 import styles from "./SearchBar.module.scss";
-import { SearchBarProps } from "./SearchBar.type";
 
 const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
   const { control } = useForm({ defaultValues: { query: "" } });
-  const handleSearch = useDebouncedCallback((term: string) => {
-    console.log("🚀 ~ handleSearch ~ term:", term);
+  const popup = useModal();
+  const { setActive } = popup;
+  const [searchRes, setSearchRes] = useState<SearchResponse | null>(null);
+
+
+  const handleSearch = useDebouncedCallback(async (term: string) => {
+    try {
+      const res: ResponseType = await querySearch({ query: term });
+      setSearchRes(res?.data || null);
+      setActive(true);
+    } catch (error) {
+      if (error instanceof CustomError) console.log(error);
+    }
   }, 300);
 
   return (
@@ -23,6 +39,7 @@ const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
         handleSearch={handleSearch}
         autoComplete="off"
       />
+      <SearchResult {...popup} searchResult={searchRes} />
     </div>
   );
 };

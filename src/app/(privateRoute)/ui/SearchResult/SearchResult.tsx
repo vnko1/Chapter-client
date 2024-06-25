@@ -1,10 +1,15 @@
+"use client";
 import React, { FC } from "react";
 
-import { Book, Post, User } from "@/app/(privateRoute)/ui";
+import { Popup } from "@/components";
+
+import { User, Post, Book } from "..";
 import { SearchResultProps } from "./SearchResult.type";
 import styles from "./SearchResult.module.scss";
 
-const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
+const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
+  if (!searchResult) return null;
+
   const { users, posts, books } = searchResult;
 
   if (!users.count && !posts.count && !books.count)
@@ -55,11 +60,13 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
   ) : null;
 
   return (
-    <>
-      {renderUsersRes}
-      {renderPostsRes}
-      {renderBooksRes}
-    </>
+    <Popup {...props} classNames={styles["popup"]}>
+      <div>
+        {renderUsersRes}
+        {renderPostsRes}
+        {renderBooksRes}
+      </div>
+    </Popup>
   );
 };
 
