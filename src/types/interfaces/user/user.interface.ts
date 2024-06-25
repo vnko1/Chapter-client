@@ -1,3 +1,5 @@
+import { IBook } from "../book/book.interface";
+
 export interface IUser {
   userId: string;
   email: string;
@@ -8,8 +10,20 @@ export interface IUser {
   location: string | null;
   avatarUrl: string | null;
   cookieAccepted: boolean;
-  userBooks: [];
+  userBooks: IBook[];
   createdAt: Date;
   updatedAt: Date;
   deletedAt: null | Date;
+  subscribers: Array<
+    Pick<
+      IUser,
+      "email" | "firstName" | "lastName" | "nickName" | "avatarUrl" | "userId"
+    >
+  >;
+  subscribedTo: Array<
+    Pick<
+      IUser,
+      "email" | "firstName" | "lastName" | "nickName" | "avatarUrl" | "userId"
+    >
+  >;
 }

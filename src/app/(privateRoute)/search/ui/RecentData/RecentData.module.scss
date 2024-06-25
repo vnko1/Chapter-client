@@ -1,0 +1,10 @@
+.title {
+  @apply text-base font-medium text-grey-1000 mb-1-xs;
+}
+
+.list {
+  @apply flex flex-col gap-0-md;
+  & button {
+    @apply bg-transparent flex items-center gap-0-md text-base text-grey-1000 md:text-lg md:font-semibold;
+  }
+}

@@ -1,0 +1,18 @@
+.link {
+  @apply flex items-center gap-1-xs text-base text-black no-underline  md:text-lg md:font-semibold hover:no-underline;
+}
+
+.title {
+  @apply hyphens-auto;
+
+  &.page {
+    @apply w-[138px] md:w-[231px] base:w-[300px] laptop:w-[386px];
+  }
+
+  &.popup {
+  }
+}
+
+.image {
+  @apply w-[44px] h-[44px] md:w-[52px] md:h-[52px] rounded-[16px];
+}

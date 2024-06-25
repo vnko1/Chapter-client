@@ -13,6 +13,9 @@ export enum EndpointsEnum {
 
   Profile = "/users",
   Password = "/users/password",
+  Subscribe = "/users/subscribe",
 
   Post = "/posts/post",
+
+  Search = "/search",
 }
