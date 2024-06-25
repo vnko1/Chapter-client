@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Post, User } from "..";
+import { Book, Post, User } from "..";
 import { SearchResultProps } from "./SearchResult.type";
 import styles from "./SearchResult.module.scss";
 
@@ -30,7 +30,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
 
   const renderPostsRes = posts.count ? (
     <>
-      <p className={styles["title"]}>Users</p>
+      <p className={styles["title"]}>Posts</p>
       <ul className={styles["list"]}>
         {posts.rows.map((el, id) => (
           <li key={id}>
@@ -41,10 +41,24 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult }) => {
     </>
   ) : null;
 
+  const renderBooksRes = books.count ? (
+    <>
+      <p className={styles["title"]}>Books</p>
+      <ul className={styles["list"]}>
+        {books.rows.map((el, id) => (
+          <li key={id}>
+            <Book {...el} />
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : null;
+
   return (
     <>
       {renderUsersRes}
       {renderPostsRes}
+      {renderBooksRes}
     </>
   );
 };
