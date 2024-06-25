@@ -14,7 +14,7 @@ import { ResponseType, SearchBarProps } from "./SearchBar.type";
 import styles from "./SearchBar.module.scss";
 
 const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
-  const { control, watch } = useForm({ defaultValues: { query: "" } });
+  const { control, watch, reset } = useForm({ defaultValues: { query: "" } });
   const popup = useModal();
   const { setActive } = popup;
   const [searchRes, setSearchRes] = useState<SearchResponse | null>(null);
@@ -38,7 +38,12 @@ const SearchBar: FC<SearchBarProps> = ({ classNames }) => {
         handleSearch={handleSearch}
         autoComplete="off"
       />
-      <SearchResult {...popup} searchResult={searchRes} />
+      <SearchResult
+        {...popup}
+        searchResult={searchRes}
+        query={watch("query")}
+        reset={reset}
+      />
     </div>
   );
 };

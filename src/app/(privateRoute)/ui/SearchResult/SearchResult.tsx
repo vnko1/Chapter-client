@@ -6,8 +6,15 @@ import { Popup } from "@/components";
 import { User, Post, Book } from "..";
 import { SearchResultProps } from "./SearchResult.type";
 import styles from "./SearchResult.module.scss";
+import Link from "next/link";
+import { LinksEnum } from "@/types";
 
-const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
+const SearchResult: FC<SearchResultProps> = ({
+  searchResult,
+  query,
+  reset,
+  ...props
+}) => {
   if (!searchResult) return null;
 
   const { users, posts, books } = searchResult;
@@ -23,7 +30,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
     <>
       <p className={styles["title"]}>Users</p>
       <ul className={styles["list"]}>
-        {users.rows.slice(2).map((el, id) => (
+        {users.rows.slice(0, 2).map((el, id) => (
           <li key={id}>
             <User {...el} type="popup" />
           </li>
@@ -36,7 +43,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
     <>
       <p className={styles["title"]}>Posts</p>
       <ul className={styles["list"]}>
-        {posts.rows.slice(2).map((el, id) => (
+        {posts.rows.slice(0, 2).map((el, id) => (
           <li key={id}>
             <Post {...el} type="popup" />
           </li>
@@ -49,7 +56,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
     <>
       <p className={styles["title"]}>Books</p>
       <ul className={styles["list"]}>
-        {books.rows.slice(2).map((el, id) => (
+        {books.rows.slice(0, 2).map((el, id) => (
           <li key={id}>
             <Book {...el} type="popup" />
           </li>
@@ -68,6 +75,16 @@ const SearchResult: FC<SearchResultProps> = ({ searchResult, ...props }) => {
             {renderUsersRes}
             {renderPostsRes}
             {renderBooksRes}
+            <Link
+              onClick={() => {
+                props.close();
+                reset();
+              }}
+              className={styles["link"]}
+              href={LinksEnum.SEARCH + "?query=" + query}
+            >
+              Learn more
+            </Link>
           </>
         )}
       </>
